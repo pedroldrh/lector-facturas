@@ -1,0 +1,9 @@
+{
+  "issuer": "María Beltrán Llopis",
+  "issuer_tax_id": null,
+  "base": 187.65,
+  "vat": 39.41,
+  "withholding": 28.15,
+  "printed_total": 198.91,
+  "issues": ["The issuer's NIF is too blurred to read reliably."]
+}
