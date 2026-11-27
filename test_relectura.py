@@ -1,3 +1,4 @@
+import json
 import subprocess
 import unittest
 from pathlib import Path
@@ -8,6 +9,7 @@ from test_lector import lectura_de_nuria
 
 
 PDF = Path(__file__).parent / "examples" / "nuria-110px.pdf"
+KRAMER = Path(__file__).parent / "examples" / "bar-kramer"
 NURIA = "Nuria Beltrán Llopis"
 NURIA_CON_TILDE = "Núria Beltrán Llopis"
 MARIA = "María Beltrán Llopis"
@@ -24,7 +26,7 @@ def nombre_leido(nombre, legibilidad="claro"):
 
 
 class RelecturaSelectiva(unittest.TestCase):
-    def leer_con_respuestas(self, *respuestas, proveedores=None, qr=None):
+    def leer_con_respuestas(self, *respuestas, proveedores=None, qr=None, pdf=PDF):
         def renderizar(cmd, **kwargs):
             self.assertEqual(cmd[0], "pdftoppm")
             Path(str(cmd[-1]) + "-1.png").touch()
@@ -34,10 +36,32 @@ class RelecturaSelectiva(unittest.TestCase):
         with patch("lector.subprocess.run", side_effect=renderizar) as render, \
                 patch("lector.leer_qr", return_value=qr), \
                 patch("lector._consultar_modelo", side_effect=respuestas) as modelo:
-            salida = leer(PDF, proveedores=proveedores)
+            salida = leer(pdf, proveedores=proveedores)
         render.assert_called_once()
         self.assertEqual(modelo.call_count, len(respuestas))
         return salida
+
+    def test_tique_del_bar_kramer(self):
+        lecturas = json.loads((KRAMER / "lecturas.json").read_text(encoding="utf-8"))
+        salida = self.leer_con_respuestas(*lecturas, pdf=KRAMER / "tique.pdf")
+        self.assertEqual(salida, json.loads((KRAMER / "salida.json").read_text(encoding="utf-8")))
+
+    def test_kramer_si_la_primera_lectura_no_duda(self):
+        primera, segunda = json.loads((KRAMER / "lecturas.json").read_text(encoding="utf-8"))
+        # Contraprueba: el modelo propone la misma sociedad y ahora afirma que es el emisor.
+        primera["confianza_por_campo"]["emisor"] = "claro"
+        primera["incidencias"] = []
+        tique = KRAMER / "tique.pdf"
+        sin_ficha = self.leer_con_respuestas(primera, pdf=tique)
+        self.assertEqual(sin_ficha["emisor"], "ROOMS AND HOST SERVICES SL")
+        self.assertEqual(sin_ficha["estado"], "leido")
+
+        # La ficha procede del BOE. No se usó en la lectura real del tique.
+        directorio = {"B98331887": "Emprendimientos Hosteleros Valencia S.L."}
+        con_ficha = self.leer_con_respuestas(primera, segunda, proveedores=directorio, pdf=tique)
+        self.assertIsNone(con_ficha["emisor"])
+        self.assertEqual(con_ficha["revision_campos"]["emisor"]["contraste_directorio"], "discrepancia")
+        self.assertEqual(con_ficha["nif"], "B98331887")
 
     def test_una_sola_lectura_si_la_identidad_esta_clara(self):
         for lectura, directorio, estado in (

@@ -1,0 +1,60 @@
+{
+  "emisor": null,
+  "nif": "B98331887",
+  "base": 72.5,
+  "iva": 7.25,
+  "retencion": null,
+  "qr_fiscal": {
+    "estado": "sin_qr_fiscal"
+  },
+  "revision_campos": {
+    "emisor": {
+      "legibilidad": "dudoso",
+      "decision": "revisar",
+      "candidato": "ROOMS AND HOST SERVICES SL",
+      "contraste_directorio": "no_consultado",
+      "motivos": [
+        "Las lecturas no han podido confirmar con claridad el nombre del emisor."
+      ]
+    },
+    "nif": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "base": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "iva": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "retencion": {
+      "legibilidad": "no_aplica",
+      "decision": "no_aplica"
+    }
+  },
+  "total_impreso": 79.75,
+  "estado": "revisar",
+  "motivos": [
+    "El CIF figura bajo el nombre comercial BAR KRAMER. ROOMS AND HOST SERVICES SL aparece como responsable del tratamiento de datos, por lo que su atribución como emisor es dudosa.",
+    "Revisar el campo emisor. Legibilidad declarada: dudoso.",
+    "Las lecturas no han podido confirmar con claridad el nombre del emisor."
+  ],
+  "relectura_emisor": {
+    "estado": "sin_confirmar",
+    "lecturas": [
+      {
+        "nombre": "ROOMS AND HOST SERVICES SL",
+        "legibilidad": "dudoso"
+      },
+      {
+        "nombre": "ROOMS AND HOST SERVICES SL",
+        "legibilidad": "claro"
+      }
+    ],
+    "motivos": [
+      "La primera lectura no identifica con claridad el nombre del emisor."
+    ]
+  }
+}

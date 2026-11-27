@@ -1,0 +1,30 @@
+[
+  {
+    "emisor": "ROOMS AND HOST SERVICES SL",
+    "nif": "B98331887",
+    "base": 72.5,
+    "iva": 7.25,
+    "retencion": null,
+    "importe_total": 79.75,
+    "tipo_iva": 10,
+    "tipo_retencion": null,
+    "numero_factura": "S.:012526",
+    "fecha_expedicion": "24-03-2025",
+    "total_fiscal_impreso": 79.75,
+    "confianza_por_campo": {
+      "emisor": "dudoso",
+      "nif": "claro",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": [
+      "El CIF figura bajo el nombre comercial BAR KRAMER. ROOMS AND HOST SERVICES SL aparece como responsable del tratamiento de datos, por lo que su atribución como emisor es dudosa."
+    ]
+  },
+  {
+    "nombre": "ROOMS AND HOST SERVICES SL",
+    "legibilidad": "claro"
+  }
+]

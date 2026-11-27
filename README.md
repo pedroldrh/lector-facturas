@@ -1,26 +1,32 @@
 # Lector de facturas
 
-Este agente lee una factura en PDF y devuelve cinco campos en JSON. Esta es la [salida del lector](examples/lucia-240.json) para la [factura ficticia de Lucía](examples/lucia-240.pdf).
+Un agente pequeño que lee una factura en PDF y devuelve cinco campos en JSON. El modelo lee las páginas y Python decide qué valores se pueden usar y cuáles necesitan revisión.
+
+## El Bar Kramer y el nombre equivocado
+
+En un tique real de **79,75 €**, la IA propuso **Rooms and Host Services SL** como emisor. Había leído bien el nombre. El error fue atribuir la venta a la empresa que figuraba en el aviso de protección de datos.
 
 | Emisor | NIF del emisor | Base imponible | IVA | Retención |
 | --- | --- | ---: | ---: | ---: |
-| Lucía Martín | 12345678Z | 240,00 € | 50,40 € | 36,00 € |
+| Pendiente de revisión | B98331887 | 72,50 € | 7,25 € | No aplica |
 
-## El fallo de la factura borrosa
+**Qué hizo saltar la revisión.** La cabecera mostraba la marca *Bar Kramer* y el NIF. En el pie, la otra sociedad figuraba como **responsable del tratamiento de datos**. La primera lectura propuso esa sociedad, explicó la duda y marcó el emisor como `dudoso`. Con esa señal, Python dejó el campo en `null` y pidió una segunda lectura independiente del nombre. La segunda repitió la misma sociedad y la calificó como `claro`. El programa conservó el nombre como candidato para revisión porque la primera lectura había sido dudosa. [Tique](examples/bar-kramer/tique.pdf) · [Las dos lecturas de la IA](examples/bar-kramer/lecturas.json) · [Salida completa](examples/bar-kramer/salida.json)
 
-En una de las lecturas, el modelo devolvió **María Beltrán Llopis**, dejó el NIF en blanco y acertó los tres importes. El NIF ilegible dio motivo para revisar la factura. Al abrir el original nítido vimos que la emisora era **Nuria Beltrán Llopis**. La respuesta guardada permite inspeccionar ese fallo aunque una lectura nueva dé otro resultado.
+**Cómo comprobamos el error.** El modelo solo recibió la primera página y trabajó sin directorio de proveedores. En la página 3 del expediente, la Administración identifica a **Emprendimientos Hosteleros Valencia** como proveedor de la factura 012526, con el mismo NIF e importe. Esa página fue la referencia para evaluar la prueba. La copia del tique incluida aquí conserva los píxeles de la página 1 tal como los recibió el modelo. [Expediente publicado por Compromís, pág. 1](https://roviraleaks.compromis.net/invoices/24-03-25-FACTURA-Kramer.pdf#page=1) · [Conformidad administrativa, pág. 3](https://roviraleaks.compromis.net/invoices/24-03-25-FACTURA-Kramer.pdf#page=3)
 
-[Copia borrosa](examples/nuria-110px.pdf) · [Respuesta del modelo](examples/lectura-original.json) · [Original nítido](examples/nuria-original.pdf) · [Cómo se hizo la prueba](examples/PRUEBA.md)
-
-Cuando hay dudas sobre la identidad del emisor, el lector vuelve a leer el nombre en una sesión independiente. Si las lecturas discrepan, lo deja pendiente y conserva ambas versiones. [Qué pasó al repetir la prueba con Nuria](examples/PRUEBA.md#relectura-selectiva)
+**Qué pasaría con una factura nueva.** Hicimos una prueba adicional: simulamos que la primera lectura marcaba ese mismo nombre como claro y no advertía de ninguna incidencia. Sin ficha de proveedor, el lector aceptó el nombre erróneo. Al facilitarle una ficha verificada para ese NIF con `--proveedores`, detectó la discrepancia y dejó el nombre pendiente. Si la gestoría aún no conoce al proveedor, el gestor puede pedir una factura completa que acredite la razón social. [Prueba con y sin ficha](test_relectura.py) · [Correspondencia entre NIF y razón social en el BOE](https://www.boe.es/buscar/doc.php?id=BOE-A-2015-4644)
 
 ## Probar con un PDF
 
 ```sh
-python lector.py examples/lucia-240.pdf
+python lector.py examples/bar-kramer/tique.pdf
 ```
 
-Sustituye la ruta por la de tu factura en euros. Para probar el escaneo borroso, usa `examples/nuria-110px.pdf`.
+Puedes sustituir la ruta por la de tu factura en euros. Cada ejecución hace una lectura nueva y puede responder de otra manera. Esta prueba reproduce la decisión de Python con las dos respuestas guardadas:
+
+```sh
+python -m unittest test_relectura.RelecturaSelectiva.test_tique_del_bar_kramer
+```
 
 **Instalación.** Se ha probado con Python 3.12, Poppler (`pdftoppm`) y Codex CLI con la sesión iniciada. El lector envía al modelo las imágenes de las páginas. En macOS puedes instalar Poppler con `brew install poppler`. En Debian y Ubuntu, el paquete es `poppler-utils`. [Instalación de Codex CLI](https://developers.openai.com/codex/cli/)
 
@@ -38,7 +44,12 @@ La retención se expresa en euros como importe positivo que se descuenta del pag
 
 ## Cómo se usó la IA
 
-Pedro eligió los casos de prueba. Al ver el fallo de Nuria, quiso comprobar qué pasaría si el modelo leyera bien el NIF y se equivocara solo en el nombre. Esa pregunta llevó a evaluar cada campo por separado. Codex implementó el lector, generó las facturas ficticias y ejecutó las pruebas. [Prueba con el nombre borroso y el NIF legible](examples/identidad/README.md)
+Pedro planteó qué pasaría si el lector acertaba el NIF y atribuía el gasto al proveedor equivocado. Después pidió probar esa hipótesis con facturas reales, sin añadir desenfoque. Codex implementó el lector y ejecutó las pruebas. El tique del Bar Kramer salió de un lote de ocho documentos públicos con referencias anotadas antes de las lecturas. El lector aceptó seis y dejó dos en revisión. Ninguna de las ocho facturas llevaba retención. [Ejemplo con retención en una factura ficticia](examples/lucia-240.json)
+
+## Otros dos ejemplos
+
+- **Una factura con los cinco campos.** Lucía Martín factura 240,00 € de base, 50,40 € de IVA y 36,00 € de retención. [PDF](examples/lucia-240.pdf) · [Salida del lector](examples/lucia-240.json)
+- **Una factura borrosa.** En una lectura de un PDF degradado para la prueba, el modelo propuso *María* donde el original decía *Nuria*. El NIF ilegible activó la revisión. [Copia borrosa](examples/nuria-110px.pdf) · [Lectura observada](examples/lectura-original.json) · [Comparación con el original](examples/PRUEBA.md)
 
 ## Otras comprobaciones
 
