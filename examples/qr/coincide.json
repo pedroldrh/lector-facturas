@@ -1,0 +1,25 @@
+{
+  "emisor": "Muestra Ámbar, S.L.",
+  "nif": "B00000018",
+  "base": 100.0,
+  "iva": 21.0,
+  "retencion": 0.0,
+  "qr_fiscal": {
+    "estado": "coincide",
+    "campos": {
+      "nif": "B00000018",
+      "numserie": "F-081",
+      "fecha": "26-11-2026",
+      "importe": "121.00"
+    },
+    "comparados": [
+      "nif",
+      "numserie",
+      "fecha",
+      "importe"
+    ]
+  },
+  "total_impreso": 121.0,
+  "estado": "leido",
+  "motivos": []
+}

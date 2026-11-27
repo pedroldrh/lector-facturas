@@ -1,0 +1,10 @@
+{
+  "emisor": "Muestra Ámbar, S.L.",
+  "nif": "B00000018",
+  "base": 100.0,
+  "iva": 21.0,
+  "retencion": 0.0,
+  "total_impreso": 121.0,
+  "estado": "leido",
+  "motivos": []
+}

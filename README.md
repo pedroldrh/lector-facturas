@@ -1,17 +1,26 @@
 # Lector de facturas
 
-Dado un PDF de una factura en euros, el lector devuelve en JSON el nombre y el NIF del emisor, la base imponible, el IVA y la retención. También devuelve el total impreso y los motivos por los que una factura necesita revisión.
+Dado un PDF de una factura en euros, el lector devuelve en JSON el nombre y el NIF del emisor, la base imponible, el IVA y la retención. Python comprueba los importes. Si la factura lleva un QR fiscal de la AEAT compatible, el lector contrasta los datos impresos con los codificados y explica las discrepancias.
+
+| Para ver el resultado | Ejemplo |
+| --- | --- |
+| Un error real del modelo | [El modelo leyó «María» donde el original decía «Nuria»](examples/PRUEBA.md). El NIF ilegible activó la revisión. |
+| Un error en el propio documento | [El QR contiene el NIF del cliente](examples/qr/README.md). El IVA y el total cuadran y ambos NIF son plausibles. |
+| El coste de pedir otra lectura | [Pruebas con 24 facturas y una comparación de dos instrucciones](examples/evaluacion/README.md). |
 
 ## Probarlo
 
-Necesitas Python 3, Poppler (el comando `pdftoppm`) y Codex CLI con una sesión iniciada. El lector envía las imágenes de las páginas al modelo que tengas disponible en Codex. [Instalación de Codex CLI](https://developers.openai.com/codex/cli/)
+Se ha probado con Python 3.12, Poppler (el comando `pdftoppm`) y Codex CLI con una sesión iniciada. El lector envía las imágenes de las páginas al modelo que tengas disponible en Codex. El QR se decodifica localmente. [Instalación de Codex CLI](https://developers.openai.com/codex/cli/)
 
 En macOS, Homebrew instala Poppler con `brew install poppler`. En Debian y Ubuntu, el paquete se llama `poppler-utils`.
 
-Prueba la factura de Lucía desde la carpeta del repositorio.
+Desde la carpeta del repositorio, instala las dependencias de lectura del QR y prueba la factura de Lucía.
 
 ```sh
-python3 lector.py examples/lucia-240.pdf
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python lector.py examples/lucia-240.pdf
 ```
 
 En esta factura deben salir Lucía Martín, NIF 12345678Z, base de 240 €, IVA de 50,40 € y retención de 36 €. La retención se expresa como cantidad positiva que se descuenta del pago.
@@ -28,10 +37,10 @@ python3 lector.py examples/nuria-110px.pdf
 
 ## Cómo se usó la IA
 
-Pedro propuso salir de los ejemplos fáciles, probar documentos publicados y deteriorar copias del mismo original. Codex generó los PDFs de prueba, organizó las lecturas independientes, comparó los resultados con las referencias y escribió el lector. La respuesta guardada en este repositorio procede de una de esas lecturas. El experimento y el código del lector se hicieron en ese orden.
+Pedro propuso probar recibos publicados, deteriorar copias del mismo original y medir cuándo compensa añadir revisores. Después eligió incorporar el cotejo con el QR fiscal. Codex generó documentos sintéticos, ejecutó las lecturas, comparó los resultados con las referencias e implementó el lector y sus pruebas. La respuesta «María» se conserva tal como salió de una lectura exploratoria.
 
 ## Verificar los controles
 
-`python3 -m unittest -v` ejecuta tres comprobaciones locales con datos guardados. Cubren el NIF ilegible de la lectura «María», una lectura con dos importes erróneos que aun así cuadran y una factura sin retención aplicable.
+`python -m unittest -v` ejecuta las pruebas locales. Cubren el NIF ilegible de la lectura «María», dos importes erróneos que aun así cuadran, una factura sin retención y el comportamiento del cotejo fiscal por QR.
 
 El estado `revisar` conserva los valores leídos y explica el motivo. En una factura simple se comprueba el total y, cuando constan los tipos, las cuotas. Se admite un céntimo de diferencia por redondeo. `leido` indica que estos controles pasaron. La comprobación de la identidad legal del proveedor requiere una referencia externa fiable.
