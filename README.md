@@ -12,6 +12,8 @@ En una de las lecturas, el modelo devolvió **María Beltrán Llopis**, dejó el
 
 [Copia borrosa](examples/nuria-110px.pdf) · [Respuesta del modelo](examples/lectura-original.json) · [Original nítido](examples/nuria-original.pdf) · [Cómo se hizo la prueba](examples/PRUEBA.md)
 
+Cuando hay dudas sobre la identidad del emisor, el lector vuelve a leer el nombre en una sesión independiente. Si las lecturas discrepan, lo deja pendiente y conserva ambas versiones. [Qué pasó al repetir la prueba con Nuria](examples/PRUEBA.md#relectura-selectiva)
+
 ## Probar con un PDF
 
 ```sh

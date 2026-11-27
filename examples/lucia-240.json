@@ -32,5 +32,15 @@
   },
   "total_impreso": 254.4,
   "estado": "leido",
-  "motivos": []
+  "motivos": [],
+  "relectura_emisor": {
+    "estado": "no_necesaria",
+    "lecturas": [
+      {
+        "nombre": "Lucía Martín",
+        "legibilidad": "claro"
+      }
+    ],
+    "motivos": []
+  }
 }

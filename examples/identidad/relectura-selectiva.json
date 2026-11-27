@@ -1,0 +1,307 @@
+{
+  "modelo": "gpt-6.2-astra",
+  "ejecuciones_nuevas": [
+    {
+      "pdf": "examples/nuria-original.pdf",
+      "salida": {
+        "emisor": "Nuria Beltrán Llopis",
+        "nif": "30847612N",
+        "base": 187.65,
+        "iva": 39.41,
+        "retencion": 28.15,
+        "qr_fiscal": {
+          "estado": "sin_qr_fiscal"
+        },
+        "revision_campos": {
+          "emisor": {
+            "legibilidad": "claro",
+            "decision": "usar",
+            "contraste_directorio": "no_consultado"
+          },
+          "nif": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          },
+          "base": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          },
+          "iva": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          },
+          "retencion": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          }
+        },
+        "total_impreso": 198.91,
+        "estado": "leido",
+        "motivos": [],
+        "relectura_emisor": {
+          "estado": "no_necesaria",
+          "lecturas": [
+            {
+              "nombre": "Nuria Beltrán Llopis",
+              "legibilidad": "claro"
+            }
+          ],
+          "motivos": []
+        }
+      }
+    },
+    {
+      "pdf": "examples/nuria-110px.pdf",
+      "salida": {
+        "emisor": "Nuria Beltrán Llopis",
+        "nif": null,
+        "base": 187.65,
+        "iva": 39.41,
+        "retencion": 28.15,
+        "qr_fiscal": {
+          "estado": "sin_qr_fiscal"
+        },
+        "revision_campos": {
+          "emisor": {
+            "legibilidad": "claro",
+            "decision": "usar",
+            "contraste_directorio": "no_consultado"
+          },
+          "nif": {
+            "legibilidad": "ilegible",
+            "decision": "revisar"
+          },
+          "base": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          },
+          "iva": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          },
+          "retencion": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          }
+        },
+        "total_impreso": 198.91,
+        "estado": "revisar",
+        "motivos": [
+          "El desenfoque impide verificar el NIF completo del emisor, el número de factura y la fecha de expedición.",
+          "Revisar el campo nif. Legibilidad declarada: ilegible."
+        ],
+        "relectura_emisor": {
+          "estado": "coinciden",
+          "lecturas": [
+            {
+              "nombre": "Nuria Beltrán Llopis",
+              "legibilidad": "claro"
+            },
+            {
+              "nombre": "Nuria Beltrán Llopis",
+              "legibilidad": "claro"
+            }
+          ],
+          "motivos": [
+            "La primera lectura no permite usar el NIF del emisor."
+          ]
+        }
+      }
+    },
+    {
+      "pdf": "examples/identidad/nombre-borroso.pdf",
+      "salida": {
+        "emisor": null,
+        "nif": "30847612N",
+        "base": 187.65,
+        "iva": 39.41,
+        "retencion": 28.15,
+        "qr_fiscal": {
+          "estado": "sin_qr_fiscal"
+        },
+        "revision_campos": {
+          "emisor": {
+            "legibilidad": "dudoso",
+            "decision": "revisar",
+            "contraste_directorio": "no_consultado",
+            "motivos": [
+              "Las lecturas no han podido confirmar con claridad el nombre del emisor."
+            ]
+          },
+          "nif": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          },
+          "base": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          },
+          "iva": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          },
+          "retencion": {
+            "legibilidad": "claro",
+            "decision": "usar"
+          }
+        },
+        "total_impreso": 198.91,
+        "estado": "revisar",
+        "motivos": [
+          "El inicio del nombre del emisor está borroso. Solo se distingue «ria Beltrán Llopis».",
+          "Revisar el campo emisor. Legibilidad declarada: dudoso.",
+          "Las lecturas no han podido confirmar con claridad el nombre del emisor."
+        ],
+        "relectura_emisor": {
+          "estado": "sin_confirmar",
+          "lecturas": [
+            {
+              "nombre": null,
+              "legibilidad": "dudoso"
+            },
+            {
+              "nombre": null,
+              "legibilidad": "dudoso"
+            }
+          ],
+          "motivos": [
+            "La primera lectura no identifica con claridad el nombre del emisor."
+          ]
+        }
+      }
+    }
+  ],
+  "reproduccion_sin_llamadas_al_modelo": {
+    "nota": "Son tres respuestas guardadas de la prueba exploratoria anterior, con la misma instrucción en los tres intentos. Para pasarlas por el lector actual se adaptó el esquema. Las etiquetas de legibilidad son de la simulación. Los nombres y el NIF vacío se tomaron tal como salieron. Los tipos se tomaron del original nítido.",
+    "respuestas_historicas": [
+      {
+        "issuer": "Nuria Beltrán Llopis",
+        "issuer_tax_id": null,
+        "base": 187.65,
+        "vat": 39.41,
+        "withholding": 28.15,
+        "printed_total": 198.91,
+        "issues": [
+          "The issuer’s NIF is too blurred to read reliably."
+        ]
+      },
+      {
+        "issuer": "Núria Beltrán Llopis",
+        "issuer_tax_id": null,
+        "base": 187.65,
+        "vat": 39.41,
+        "withholding": 28.15,
+        "printed_total": 198.91,
+        "issues": [
+          "The issuer's NIF is too blurred to read reliably."
+        ]
+      },
+      {
+        "issuer": "María Beltrán Llopis",
+        "issuer_tax_id": null,
+        "base": 187.65,
+        "vat": 39.41,
+        "withholding": 28.15,
+        "printed_total": 198.91,
+        "issues": [
+          "The issuer's NIF is too blurred to read reliably."
+        ]
+      }
+    ],
+    "entrada_adaptada": [
+      {
+        "emisor": "Nuria Beltrán Llopis",
+        "nif": null,
+        "base": 187.65,
+        "iva": 39.41,
+        "retencion": 28.15,
+        "importe_total": 198.91,
+        "tipo_iva": 21,
+        "tipo_retencion": 15,
+        "total_simple": true,
+        "incidencias": [
+          "The issuer’s NIF is too blurred to read reliably."
+        ],
+        "confianza_por_campo": {
+          "emisor": "claro",
+          "nif": "ilegible",
+          "base": "claro",
+          "iva": "claro",
+          "retencion": "claro"
+        }
+      },
+      {
+        "nombre": "Núria Beltrán Llopis",
+        "legibilidad": "claro"
+      },
+      {
+        "nombre": "María Beltrán Llopis",
+        "legibilidad": "claro"
+      }
+    ],
+    "salida": {
+      "emisor": null,
+      "nif": null,
+      "base": 187.65,
+      "iva": 39.41,
+      "retencion": 28.15,
+      "qr_fiscal": {
+        "estado": "sin_qr_fiscal"
+      },
+      "revision_campos": {
+        "emisor": {
+          "legibilidad": "claro",
+          "decision": "revisar",
+          "contraste_directorio": "no_consultado",
+          "candidato": "Nuria Beltrán Llopis",
+          "motivos": [
+            "Las lecturas proponen nombres distintos para el emisor."
+          ]
+        },
+        "nif": {
+          "legibilidad": "ilegible",
+          "decision": "revisar"
+        },
+        "base": {
+          "legibilidad": "claro",
+          "decision": "usar"
+        },
+        "iva": {
+          "legibilidad": "claro",
+          "decision": "usar"
+        },
+        "retencion": {
+          "legibilidad": "claro",
+          "decision": "usar"
+        }
+      },
+      "total_impreso": 198.91,
+      "estado": "revisar",
+      "motivos": [
+        "The issuer’s NIF is too blurred to read reliably.",
+        "Revisar el campo nif. Legibilidad declarada: ilegible.",
+        "Las lecturas proponen nombres distintos para el emisor."
+      ],
+      "relectura_emisor": {
+        "estado": "distintos",
+        "lecturas": [
+          {
+            "nombre": "Nuria Beltrán Llopis",
+            "legibilidad": "claro"
+          },
+          {
+            "nombre": "Núria Beltrán Llopis",
+            "legibilidad": "claro"
+          },
+          {
+            "nombre": "María Beltrán Llopis",
+            "legibilidad": "claro"
+          }
+        ],
+        "motivos": [
+          "La primera lectura no permite usar el NIF del emisor."
+        ]
+      }
+    }
+  }
+}

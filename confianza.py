@@ -31,7 +31,7 @@ def normalizar_nif(valor):
     return compacto[2:] if len(compacto) == 11 and compacto.startswith("ES") else compacto
 
 
-def _nombre_comparable(nombre):
+def nombre_comparable(nombre):
     return " ".join(unicodedata.normalize("NFC", nombre).casefold().split())
 
 
@@ -129,7 +129,7 @@ def evaluar_campos(lectura, proveedores=None):
             emisor["nombre_directorio"] = registrado
             if aprobados["emisor"] is None:
                 emisor["contraste_directorio"] = "nombre_no_utilizable"
-            elif _nombre_comparable(aprobados["emisor"]) == _nombre_comparable(registrado):
+            elif nombre_comparable(aprobados["emisor"]) == nombre_comparable(registrado):
                 emisor["contraste_directorio"] = "coincide"
             else:
                 emisor["contraste_directorio"] = "discrepancia"
