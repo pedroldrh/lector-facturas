@@ -4,7 +4,7 @@ Un agente pequeño que lee una factura en PDF y devuelve cinco campos en JSON. E
 
 ## El Bar Kramer y el nombre equivocado
 
-En un tique real de **79,75 €**, la IA propuso **Rooms and Host Services SL** como emisor. Había leído bien el nombre. El error fue atribuir la venta a la empresa que figuraba en el aviso de protección de datos.
+En un tique real de **79,75 €**, la IA propuso **Rooms and Host Services SL** como emisor. Había leído bien el nombre. El error fue atribuir la venta a la empresa que figuraba en el aviso de protección de datos. Estos son los cinco campos de esa ejecución, guardada antes del cambio de prompt.
 
 | Emisor | NIF del emisor | Base imponible | IVA | Retención |
 | --- | --- | ---: | ---: | ---: |
@@ -15,6 +15,14 @@ En un tique real de **79,75 €**, la IA propuso **Rooms and Host Services SL** 
 **Cómo comprobamos el error.** El modelo solo recibió la primera página y trabajó sin directorio de proveedores. En la página 3 del expediente, la Administración identifica a **Emprendimientos Hosteleros Valencia** como proveedor de la factura 012526, con el mismo NIF e importe. Esa página fue la referencia para evaluar la prueba. La copia del tique incluida aquí conserva los píxeles de la página 1 tal como los recibió el modelo. [Expediente publicado por Compromís, pág. 1](https://roviraleaks.compromis.net/invoices/24-03-25-FACTURA-Kramer.pdf#page=1) · [Conformidad administrativa, pág. 3](https://roviraleaks.compromis.net/invoices/24-03-25-FACTURA-Kramer.pdf#page=3)
 
 **Qué pasaría con una factura nueva.** Hicimos una prueba adicional: simulamos que la primera lectura marcaba ese mismo nombre como claro y no advertía de ninguna incidencia. Sin ficha de proveedor, el lector aceptó el nombre erróneo. Al facilitarle una ficha verificada para ese NIF con `--proveedores`, detectó la discrepancia y dejó el nombre pendiente. Si la gestoría aún no conoce al proveedor, el gestor puede pedir una factura completa que acredite la razón social. [Prueba con y sin ficha](test_relectura.py) · [Correspondencia entre NIF y razón social en el BOE](https://www.boe.es/buscar/doc.php?id=BOE-A-2015-4644)
+
+**Al repetir el tique con el prompt nuevo**, la primera lectura ya dejó el nombre vacío y explicó que la sociedad del pie solo figuraba como responsable de los datos. La segunda volvió a proponer esa sociedad. El lector mantuvo el nombre pendiente y conservó el NIF, la base y el IVA. El tique de Kramer formaba parte de las 12 facturas de desarrollo. [Salida con el prompt actual](examples/bar-kramer/con-prompt-nuevo.json)
+
+## Qué cambió al probar el prompt en 30 facturas reales
+
+Usamos 12 facturas para escribir las instrucciones que utiliza hoy el lector. Después comparamos el prompt básico y el nuevo con las mismas 18 facturas reservadas, en sesiones separadas de Astra. [Prompt actual](prompts/factura.txt) · [Resultados de las 30 facturas](examples/evaluacion/30-facturas-reales/README.md)
+
+En una factura de viajes, el básico marcó como utilizables dos sumas correctas que no figuraban impresas como totales. El nuevo dejó esos dos campos pendientes. En otra factura los totales sí aparecían y el nuevo evitó una revisión. En conjunto, los campos aceptados que debían revisarse bajaron de **2 a 0**, y las revisiones innecesarias de facturas bajaron de **4 a 3**. Ninguna de las 30 tenía una retención aplicada.
 
 ## Probar con un PDF
 

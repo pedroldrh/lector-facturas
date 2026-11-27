@@ -1,0 +1,50 @@
+{
+  "desarrollo-A": {
+    "facturas": 12,
+    "campos": 60,
+    "campos_erroneos_aceptados": 2,
+    "facturas_con_error_aceptado": 2,
+    "facturas_aceptadas_enteras_con_error": 1,
+    "campos_aceptados_sin_respaldo_pero_acertados": 0,
+    "facturas_resolubles": 8,
+    "revisiones_sobrantes_factura": 2,
+    "revisiones_sobrantes_campo": 1,
+    "revisiones_justificadas_factura": 3,
+    "revisiones_omitidas_factura": 1,
+    "revisiones_totales_factura": 5,
+    "tokens_entrada": 278683,
+    "tokens_salida": 2788
+  },
+  "evaluacion-A": {
+    "facturas": 18,
+    "campos": 90,
+    "campos_erroneos_aceptados": 2,
+    "facturas_con_error_aceptado": 1,
+    "facturas_aceptadas_enteras_con_error": 0,
+    "campos_aceptados_sin_respaldo_pero_acertados": 0,
+    "facturas_resolubles": 16,
+    "revisiones_sobrantes_factura": 4,
+    "revisiones_sobrantes_campo": 1,
+    "revisiones_justificadas_factura": 2,
+    "revisiones_omitidas_factura": 0,
+    "revisiones_totales_factura": 6,
+    "tokens_entrada": 355521,
+    "tokens_salida": 4026
+  },
+  "evaluacion-B": {
+    "facturas": 18,
+    "campos": 90,
+    "campos_erroneos_aceptados": 0,
+    "facturas_con_error_aceptado": 0,
+    "facturas_aceptadas_enteras_con_error": 0,
+    "campos_aceptados_sin_respaldo_pero_acertados": 0,
+    "facturas_resolubles": 16,
+    "revisiones_sobrantes_factura": 3,
+    "revisiones_sobrantes_campo": 1,
+    "revisiones_justificadas_factura": 2,
+    "revisiones_omitidas_factura": 0,
+    "revisiones_totales_factura": 5,
+    "tokens_entrada": 373689,
+    "tokens_salida": 4131
+  }
+}
