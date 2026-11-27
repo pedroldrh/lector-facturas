@@ -1,6 +1,6 @@
 {
   "emisor": "Muestra Ámbar, S.L.",
-  "nif": "B00000018",
+  "nif": null,
   "base": 100.0,
   "iva": 21.0,
   "retencion": 0.0,
@@ -17,7 +17,34 @@
       "numserie",
       "fecha",
       "importe"
+    ],
+    "discrepancias": [
+      "nif"
     ]
+  },
+  "revision_campos": {
+    "emisor": {
+      "legibilidad": "claro",
+      "decision": "usar",
+      "contraste_directorio": "no_consultado"
+    },
+    "nif": {
+      "legibilidad": "claro",
+      "decision": "revisar",
+      "candidato": "B00000018"
+    },
+    "base": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "iva": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "retencion": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    }
   },
   "total_impreso": 121.0,
   "estado": "revisar",

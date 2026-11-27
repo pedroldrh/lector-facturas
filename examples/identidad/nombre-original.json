@@ -1,0 +1,37 @@
+{
+  "emisor": "Nuria Beltrán Llopis",
+  "nif": "30847612N",
+  "base": 187.65,
+  "iva": 39.41,
+  "retencion": 28.15,
+  "qr_fiscal": {
+    "estado": "sin_qr_fiscal"
+  },
+  "revision_campos": {
+    "emisor": {
+      "legibilidad": "claro",
+      "decision": "usar",
+      "nombre_directorio": "Nuria Beltrán Llopis",
+      "contraste_directorio": "coincide"
+    },
+    "nif": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "base": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "iva": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "retencion": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    }
+  },
+  "total_impreso": 198.91,
+  "estado": "leido",
+  "motivos": []
+}

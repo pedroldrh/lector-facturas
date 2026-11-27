@@ -13,7 +13,7 @@ Se redujo la factura de Nuria de 720 a 110 píxeles de ancho y se volvió a ampl
 
 ## Cómo detectarlo
 
-La única alerta del modelo en aquella lectura se refería al NIF ilegible. Los importes cuadraban hasta el céntimo. El error en el nombre se comprobó al cotejar «María» con «Nuria» en el original nítido. En una factura nueva, un NIF ilegible basta para pedir revisión y solicitar una copia más clara antes de asociar el gasto a un proveedor.
+La única alerta del modelo en aquella lectura se refería al NIF ilegible. Los importes cuadraban hasta el céntimo. El error en el nombre se comprobó al cotejar «María» con «Nuria» en el original nítido. En una factura nueva, un NIF ilegible basta para pedir revisión y solicitar una copia más clara antes de asociar el gasto a un proveedor. Pedro planteó otra pregunta: ¿qué pasaría si se pudiera leer el NIF y solo fallara el nombre? [Prueba con NIF legible y revisión por campo](identidad/README.md)
 
 ## Instrucción de la prueba exploratoria
 

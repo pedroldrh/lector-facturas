@@ -1,0 +1,40 @@
+{
+  "emisor": null,
+  "nif": "30847612N",
+  "base": 187.65,
+  "iva": 39.41,
+  "retencion": 28.15,
+  "qr_fiscal": {
+    "estado": "sin_qr_fiscal"
+  },
+  "revision_campos": {
+    "emisor": {
+      "legibilidad": "dudoso",
+      "decision": "revisar",
+      "nombre_directorio": "Nuria Beltrán Llopis",
+      "contraste_directorio": "nombre_no_utilizable"
+    },
+    "nif": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "base": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "iva": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "retencion": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    }
+  },
+  "total_impreso": 198.91,
+  "estado": "revisar",
+  "motivos": [
+    "El inicio del nombre del emisor está borroso. Solo se lee «…ria Beltrán Llopis».",
+    "Revisar el campo emisor. Legibilidad declarada: dudoso."
+  ]
+}

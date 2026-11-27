@@ -5,6 +5,8 @@ from datetime import datetime
 from decimal import Decimal
 from urllib.parse import parse_qsl, urlsplit
 
+from confianza import normalizar_nif
+
 
 SERVIDORES = {"www2.agenciatributaria.gob.es", "prewww2.aeat.es"}
 RUTAS = {"/wlpl/TIKE-CONT/ValidarQR", "/wlpl/TIKE-CONT/ValidarQRNoVerifactu"}
@@ -81,6 +83,7 @@ def contrastar(lectura, qr):
     impresos = {"nif": lectura["nif"], "numserie": lectura.get("numero_factura"),
                 "fecha": lectura.get("fecha_expedicion"), "importe": total}
     comparados = []
+    discrepancias = []
     motivos = []
     for campo, valor in impresos.items():
         if valor is None:
@@ -89,15 +92,13 @@ def contrastar(lectura, qr):
         if campo == "importe":
             coincide = Decimal(str(valor)) == Decimal(qr_valor)
         elif campo == "nif":
-            nif_impreso = re.sub(r"[\s-]+", "", valor.upper())
-            if len(nif_impreso) == 11 and nif_impreso.startswith("ES"):
-                nif_impreso = nif_impreso[2:]
-            coincide = nif_impreso == qr_valor
+            coincide = normalizar_nif(valor) == qr_valor
         else:
             coincide = valor.strip() == qr_valor
         comparados.append(campo)
         if not coincide:
+            discrepancias.append(campo)
             motivos.append(f"El campo {campo} difiere: lectura «{valor}», QR fiscal «{qr_valor}».")
     estado = "coincide" if len(comparados) == len(impresos) else "parcial"
     return {**qr, "estado": "discrepancia" if motivos else estado,
-            "comparados": comparados}, motivos
+            "comparados": comparados, "discrepancias": discrepancias}, motivos

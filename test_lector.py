@@ -19,7 +19,8 @@ class RevisionDeFactura(unittest.TestCase):
             "incidencias": [],
         }
         resultado = revisar(lectura)
-        self.assertEqual(resultado["emisor"], "María Beltrán Llopis")
+        self.assertIsNone(resultado["emisor"])
+        self.assertEqual(resultado["revision_campos"]["emisor"]["candidato"], original["issuer"])
         self.assertEqual(resultado["estado"], "revisar")
         self.assertTrue(any("nif" in s.lower() for s in resultado["motivos"]))
 
@@ -30,6 +31,7 @@ class RevisionDeFactura(unittest.TestCase):
             "base": 87.65, "iva": 39.41, "retencion": 28.15, "importe_total": 98.91,
             "tipo_iva": 21, "tipo_retencion": 15, "total_simple": True,
             "incidencias": [],
+            "confianza_por_campo": dict.fromkeys(("emisor", "nif", "base", "iva", "retencion"), "claro"),
         }
         resultado = revisar(lectura)
         self.assertEqual(resultado["total_impreso"], 98.91)
@@ -42,6 +44,10 @@ class RevisionDeFactura(unittest.TestCase):
             "base": 100, "iva": 21, "retencion": None, "importe_total": 121,
             "tipo_iva": 21, "tipo_retencion": None, "total_simple": True,
             "incidencias": [],
+            "confianza_por_campo": {
+                "emisor": "claro", "nif": "claro", "base": "claro", "iva": "claro",
+                "retencion": "no_aplica",
+            },
         }
         resultado = revisar(lectura)
         self.assertIsNone(resultado["retencion"])

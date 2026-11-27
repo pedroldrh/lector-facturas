@@ -25,6 +25,7 @@ def lectura_impresa():
         "incidencias": [],
         "numero_factura": "F-081", "fecha_expedicion": "26-11-2026",
         "total_fiscal_impreso": 121,
+        "confianza_por_campo": dict.fromkeys(("emisor", "nif", "base", "iva", "retencion"), "claro"),
     }
 
 
@@ -48,7 +49,8 @@ class ContrasteDeIdentidad(unittest.TestCase):
         self.assertEqual(revisar(lectura)["estado"], "leido")
         resultado = revisar_con_codigos(lectura, [URL_AEAT + PARAMETROS])
         self.assertEqual(resultado["estado"], "revisar")
-        self.assertEqual(resultado["nif"], NIF_CLIENTE)
+        self.assertIsNone(resultado["nif"])
+        self.assertEqual(resultado["revision_campos"]["nif"]["candidato"], NIF_CLIENTE)
         self.assertTrue(any("nif" in m.lower() for m in resultado["motivos"]))
 
     def test_conserva_el_nif_impreso_con_prefijo_y_separadores(self):
@@ -115,14 +117,14 @@ class ContrasteDeIdentidad(unittest.TestCase):
 class CodigosEnElPDF(unittest.TestCase):
     def test_lectura_de_los_ejemplos_tras_renderizarlos(self):
         with tempfile.TemporaryDirectory() as carpeta:
-            for nombre, nif, esperado in (
-                ("coincide", NIF_EMISOR, "leido"),
-                ("conflicto-nif", NIF_CLIENTE, "revisar"),
+            for nombre, nif_qr, nif_utilizable, esperado in (
+                ("coincide", NIF_EMISOR, NIF_EMISOR, "leido"),
+                ("conflicto-nif", NIF_CLIENTE, None, "revisar"),
             ):
                 with self.subTest(nombre=nombre):
                     imagen = renderizar(EJEMPLOS / "qr" / (nombre + ".pdf"), carpeta)
                     qr = leer_qr([imagen])
-                    self.assertEqual(qr["campos"]["nif"], nif)
+                    self.assertEqual(qr["campos"]["nif"], nif_qr)
                     resultado = revisar(lectura_impresa(), qr)
                     self.assertEqual(resultado["estado"], esperado)
-                    self.assertEqual(resultado["nif"], NIF_EMISOR)
+                    self.assertEqual(resultado["nif"], nif_utilizable)

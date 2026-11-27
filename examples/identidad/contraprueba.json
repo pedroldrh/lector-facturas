@@ -1,0 +1,84 @@
+{
+  "tipo": "Contraprueba controlada de la regla con una lectura simulada, no una salida en vivo del modelo.",
+  "entrada": {
+    "emisor": "María Beltrán Llopis",
+    "nif": "30847612N",
+    "base": 187.65,
+    "iva": 39.41,
+    "retencion": 28.15,
+    "importe_total": 198.91,
+    "tipo_iva": 21,
+    "tipo_retencion": 15,
+    "total_simple": true,
+    "incidencias": [],
+    "numero_factura": "X-71",
+    "fecha_expedicion": "26-11-2026",
+    "total_fiscal_impreso": 227.06,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "claro",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "claro"
+    }
+  },
+  "sin_evaluacion_por_campo_en_5367e63": {
+    "estado": "leido",
+    "emisor": "María Beltrán Llopis",
+    "nif": "30847612N",
+    "base": 187.65,
+    "iva": 39.41,
+    "retencion": 28.15,
+    "evaluacion_emisor": null,
+    "motivos": []
+  },
+  "nombre_declarado_claro_sin_directorio": {
+    "estado": "leido",
+    "emisor": "María Beltrán Llopis",
+    "nif": "30847612N",
+    "base": 187.65,
+    "iva": 39.41,
+    "retencion": 28.15,
+    "evaluacion_emisor": {
+      "legibilidad": "claro",
+      "decision": "usar",
+      "contraste_directorio": "no_consultado"
+    },
+    "motivos": []
+  },
+  "nombre_declarado_claro_con_directorio": {
+    "estado": "revisar",
+    "emisor": null,
+    "nif": "30847612N",
+    "base": 187.65,
+    "iva": 39.41,
+    "retencion": 28.15,
+    "evaluacion_emisor": {
+      "legibilidad": "claro",
+      "decision": "revisar",
+      "nombre_directorio": "Nuria Beltrán Llopis",
+      "contraste_directorio": "discrepancia",
+      "candidato": "María Beltrán Llopis"
+    },
+    "motivos": [
+      "El nombre del emisor difiere del proveedor verificado para ese NIF."
+    ]
+  },
+  "nombre_declarado_dudoso_sin_directorio": {
+    "estado": "revisar",
+    "emisor": null,
+    "nif": "30847612N",
+    "base": 187.65,
+    "iva": 39.41,
+    "retencion": 28.15,
+    "evaluacion_emisor": {
+      "legibilidad": "dudoso",
+      "decision": "revisar",
+      "candidato": "María Beltrán Llopis",
+      "contraste_directorio": "no_consultado"
+    },
+    "motivos": [
+      "Revisar el campo emisor. Legibilidad declarada: dudoso."
+    ]
+  }
+}

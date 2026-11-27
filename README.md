@@ -5,6 +5,7 @@ Dado un PDF de una factura en euros, el lector devuelve en JSON el nombre y el N
 | Para ver el resultado | Ejemplo |
 | --- | --- |
 | Un error real del modelo | [El modelo leyó «María» donde el original decía «Nuria»](examples/PRUEBA.md). El NIF ilegible activó la revisión. |
+| Un nombre dudoso aunque el NIF sea legible | [Revisión por campo y contraste con un proveedor conocido](examples/identidad/README.md). El gestor recibe el candidato dudoso por separado de los campos utilizables. |
 | Un error en el propio documento | [El QR contiene el NIF del cliente](examples/qr/README.md). El IVA y el total cuadran y ambos NIF son plausibles. |
 | El coste de pedir otra lectura | [Pruebas con 24 facturas y una comparación de dos instrucciones](examples/evaluacion/README.md). |
 
@@ -25,6 +26,8 @@ python lector.py examples/lucia-240.pdf
 
 En esta factura deben salir Lucía Martín, NIF 12345678Z, base de 240 €, IVA de 50,40 € y retención de 36 €. La retención se expresa como cantidad positiva que se descuenta del pago.
 
+Cada campo tiene su propia valoración de legibilidad. El lector aparta los valores dudosos y conserva los demás. Para exigir, además, una coincidencia entre nombre y NIF con el directorio verificado de tu empresa, pasa `--proveedores proveedores.json`. El archivo se consulta localmente. [Ejemplo de directorio y resultados](examples/identidad/README.md)
+
 ## El caso que falló
 
 En una lectura de una factura borrosa, el modelo devolvió «María Beltrán Llopis». El original decía «Nuria Beltrán Llopis». Acertó los tres importes y dejó vacío el NIF. El programa puede usar ese NIF ilegible para pedir revisión. Hace falta una referencia fiable, como la copia nítida, para comprobar el nombre correcto. [PDF original, copia borrosa y respuesta guardada](examples/PRUEBA.md)
@@ -37,10 +40,10 @@ python3 lector.py examples/nuria-110px.pdf
 
 ## Cómo se usó la IA
 
-Pedro propuso probar recibos publicados, deteriorar copias del mismo original y medir cuándo compensa añadir revisores. Después eligió incorporar el cotejo con el QR fiscal. Codex generó documentos sintéticos, ejecutó las lecturas, comparó los resultados con las referencias e implementó el lector y sus pruebas. La respuesta «María» se conserva tal como salió de una lectura exploratoria.
+Pedro propuso probar recibos publicados, deteriorar copias del mismo original y medir cuándo compensa añadir revisores. Eligió incorporar el cotejo con el QR fiscal y planteó evaluar cada campo por separado al ver que un NIF legible podría ocultar un nombre mal leído. Codex generó documentos sintéticos, ejecutó las lecturas, comparó los resultados con las referencias e implementó el lector y sus pruebas. La respuesta «María» se conserva tal como salió de una lectura exploratoria.
 
 ## Verificar los controles
 
 `python -m unittest -v` ejecuta las pruebas locales. Cubren el NIF ilegible de la lectura «María», dos importes erróneos que aun así cuadran, una factura sin retención y el comportamiento del cotejo fiscal por QR.
 
-El estado `revisar` conserva los valores leídos y explica el motivo. En una factura simple se comprueba el total y, cuando constan los tipos, las cuotas. Se admite un céntimo de diferencia por redondeo. `leido` indica que estos controles pasaron. La comprobación de la identidad legal del proveedor requiere una referencia externa fiable.
+El estado `revisar` indica que la factura necesita intervención humana. Si el modelo propone un valor dudoso, el campo principal queda en `null` y la propuesta se guarda solo como `candidato` en `revision_campos`. Los controles aritméticos comprueban los importes tal como se imprimieron. Se admite un céntimo de diferencia por redondeo. Sin directorio, un nombre marcado como claro sigue siendo una transcripción del modelo.

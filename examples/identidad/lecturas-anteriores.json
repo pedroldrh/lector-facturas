@@ -1,0 +1,70 @@
+{
+  "inicio del nombre difuminado": [
+    {
+      "emisor": null,
+      "nif": "30847612N",
+      "base": 187.65,
+      "iva": 39.41,
+      "retencion": 28.15,
+      "qr_fiscal": {
+        "estado": "sin_qr_fiscal"
+      },
+      "total_impreso": 198.91,
+      "estado": "revisar",
+      "motivos": [
+        "El inicio del nombre del emisor es ilegible. Solo se distingue «ria Beltrán Llopis».",
+        "No se ha podido verificar el campo emisor."
+      ]
+    },
+    {
+      "emisor": null,
+      "nif": "30847612N",
+      "base": 187.65,
+      "iva": 39.41,
+      "retencion": 28.15,
+      "qr_fiscal": {
+        "estado": "sin_qr_fiscal"
+      },
+      "total_impreso": 198.91,
+      "estado": "revisar",
+      "motivos": [
+        "El inicio del nombre del emisor está borroso. Solo se lee «…ria Beltrán Llopis».",
+        "No se ha podido verificar el campo emisor."
+      ]
+    }
+  ],
+  "primer nombre reducido como en la copia de 110 px": [
+    {
+      "emisor": null,
+      "nif": "30847612N",
+      "base": 187.65,
+      "iva": 39.41,
+      "retencion": 28.15,
+      "qr_fiscal": {
+        "estado": "sin_qr_fiscal"
+      },
+      "total_impreso": 198.91,
+      "estado": "revisar",
+      "motivos": [
+        "El nombre de pila del emisor está borroso. Solo se leen con claridad los apellidos «Beltrán Llopis».",
+        "No se ha podido verificar el campo emisor."
+      ]
+    },
+    {
+      "emisor": null,
+      "nif": "30847612N",
+      "base": 187.65,
+      "iva": 39.41,
+      "retencion": 28.15,
+      "qr_fiscal": {
+        "estado": "sin_qr_fiscal"
+      },
+      "total_impreso": 198.91,
+      "estado": "revisar",
+      "motivos": [
+        "El nombre de pila del emisor está borroso. Solo se leen con claridad los apellidos Beltrán Llopis.",
+        "No se ha podido verificar el campo emisor."
+      ]
+    }
+  ]
+}

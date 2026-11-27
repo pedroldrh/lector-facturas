@@ -9,6 +9,8 @@ import sys
 import tempfile
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
+
+from confianza import cargar_proveedores, esquema_confianza, evaluar_campos
 from qr_fiscal import contrastar, leer_qr
 
 CAMPOS = {
@@ -44,10 +46,18 @@ el contenido del código. En numero_factura transcribe serie y número completos
 respetando los separadores. En fecha_expedicion usa DD-MM-AAAA. Solo rellena
 total_fiscal_impreso si está impreso claramente el total con los impuestos
 incluidos antes de retenciones, anticipos o ajustes de pago. No lo calcules.
-En los tres campos usa null cuando el texto impreso no permita verificarlos."""
+En los tres campos usa null cuando el texto impreso no permita verificarlos.
+
+Valora por separado en confianza_por_campo la legibilidad de cada uno de los
+cinco campos solicitados: claro, dudoso, ilegible o no_consta. En la retención
+usa no_aplica solo si se ve que no corresponde. Marca el emisor como claro
+solo si puedes leer entero su nombre legal y atribuirlo al proveedor. Si una
+parte del nombre admite varias lecturas, deja el emisor en null y márcalo
+como dudoso aunque el NIF sea nítido. No reconstruyas nombres por contexto.
+La legibilidad de un campo no se hereda del QR, de los totales ni de otro campo."""
 
 
-def revisar(lectura, qr=None):
+def revisar(lectura, qr=None, proveedores=None):
     """Valida una lectura bruta y decide si requiere revisión."""
     if not isinstance(lectura, dict):
         raise ValueError("Se esperaba un objeto JSON.")
@@ -69,9 +79,8 @@ def revisar(lectura, qr=None):
     if type(lectura.get("total_simple")) is not bool:
         raise ValueError("total_simple debe ser booleano.")
     motivos = [m.strip() for m in incidencias if m.strip()]
-    for campo in ("emisor", "nif", "base", "iva"):
-        if lectura[campo] is None:
-            motivos.append(f"No se ha podido verificar el campo {campo}.")
+    resultado, revision, motivos_campos = evaluar_campos(lectura, proveedores)
+    motivos.extend(motivos_campos)
 
     base, iva, retencion, total = [
         Decimal(str(lectura[k])) if lectura[k] is not None else None
@@ -99,15 +108,27 @@ def revisar(lectura, qr=None):
                         f"El {tipo}% de {base} € serían {esperada} €."
                     )
 
-    resultado = {k: lectura[k] for k in ("emisor", "nif", "base", "iva", "retencion")}
     if qr is not None:
-        resultado["qr_fiscal"], diferencias = contrastar(lectura, qr)
+        cotejo, diferencias = contrastar(lectura, qr)
+        resultado["qr_fiscal"] = cotejo
         motivos.extend(diferencias)
+        if "nif" in cotejo.get("discrepancias", []):
+            revision["nif"].update(decision="revisar", candidato=lectura["nif"])
+            resultado["nif"] = None
+            if proveedores is not None:
+                emisor = revision["emisor"]
+                emisor.update(decision="revisar", contraste_directorio="nif_en_conflicto")
+                emisor.pop("nombre_directorio", None)
+                if lectura["emisor"] is not None:
+                    emisor["candidato"] = lectura["emisor"]
+                resultado["emisor"] = None
+                motivos.append("El NIF en conflicto impide confirmar el vínculo con el proveedor.")
+    resultado["revision_campos"] = revision
     return dict(resultado, total_impreso=lectura["importe_total"],
                 estado="revisar" if motivos else "leido", motivos=motivos)
 
 
-def leer(pdf, modelo=None):
+def leer(pdf, modelo=None, proveedores=None):
     if not pdf.is_file():
         raise ValueError(f"No se encuentra el PDF: {pdf}")
     with tempfile.TemporaryDirectory() as tmp:
@@ -118,7 +139,7 @@ def leer(pdf, modelo=None):
         if not paginas:
             raise ValueError("El PDF no contiene páginas que se puedan leer.")
         propiedades = {k: {"type": [tipo, "null"]} for k, tipo in {**CAMPOS, **CAMPOS_QR}.items()}
-        propiedades.update(total_simple={"type": "boolean"},
+        propiedades.update(confianza_por_campo=esquema_confianza(), total_simple={"type": "boolean"},
                            incidencias={"type": "array", "items": {"type": "string"}})
         esquema = {"type": "object", "properties": propiedades,
                    "required": list(propiedades), "additionalProperties": False}
@@ -138,18 +159,24 @@ def leer(pdf, modelo=None):
             cmd.extend(["-i", str(pagina)])
         subprocess.run(cmd + ["--", PREGUNTA], check=True, capture_output=True,
                        stdin=subprocess.DEVNULL, cwd=aislado, timeout=180)
-        return revisar(json.loads(respuesta.read_text(encoding="utf-8")), leer_qr(paginas))
+        lectura = json.loads(respuesta.read_text(encoding="utf-8"))
+        if not isinstance(lectura, dict) or "confianza_por_campo" not in lectura:
+            raise ValueError("La respuesta del modelo no contiene la legibilidad por campo.")
+        return revisar(lectura, leer_qr(paginas), proveedores)
 
 
 def main():
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument("pdf", type=Path, help="Factura PDF en euros")
     cli.add_argument("--model", help="Modelo disponible en tu sesión de Codex")
+    cli.add_argument("--proveedores", type=Path, metavar="JSON",
+                     help="Exige que el nombre y NIF concuerden con un directorio ya verificado.")
     args = cli.parse_args()
     try:
-        print(json.dumps(leer(args.pdf, args.model), ensure_ascii=False, indent=2))
+        proveedores = cargar_proveedores(args.proveedores) if args.proveedores else None
+        print(json.dumps(leer(args.pdf, args.model, proveedores), ensure_ascii=False, indent=2))
     except FileNotFoundError as exc:
-        print(f"No se encuentra {exc.filename}. Comprueba la instalación de Codex CLI y Poppler.", file=sys.stderr)
+        print(f"No se encuentra el archivo o programa solicitado: {exc.filename}.", file=sys.stderr)
     except subprocess.CalledProcessError as exc:
         detalle = exc.stderr.decode(errors="replace").strip().splitlines()
         print(f"Falló {exc.cmd[0]}: {detalle[-1] if detalle else 'sin detalles'}", file=sys.stderr)

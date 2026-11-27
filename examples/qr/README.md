@@ -9,7 +9,7 @@ Las dos facturas sintéticas muestran la misma operación. Muestra Ámbar, S.L. 
 
 La [versión anterior del lector](https://github.com/pedroldrh/lector-facturas/tree/11839320d01ce8ddf0842ff221cf9c77fd69c104) aceptó la segunda factura. Los cinco campos impresos estaban bien leídos y los 121 € cuadraban. [Salida guardada antes de incorporar el QR](antes-sin-qr.json)
 
-Las tres salidas guardadas proceden de ejecuciones del lector con GPT-6.2 Astra. En la segunda factura, el lector actual conservó el NIF impreso del proveedor y mostró la discrepancia para que un gestor pudiera pedir una copia correcta. En esta prueba el error se introdujo a propósito en el documento. El [caso de Nuria](../PRUEBA.md) recoge un error que sí cometió el modelo.
+Las tres salidas guardadas proceden de ejecuciones del lector con GPT-6.2 Astra. En la segunda factura, el lector actual dejó el NIF principal en `null`, conservó el NIF impreso en `revision_campos.nif.candidato` y mostró el valor del QR para que un gestor pudiera contrastarlos. En esta prueba el error se introdujo a propósito en el documento. El [caso de Nuria](../PRUEBA.md) recoge un error que sí cometió el modelo.
 
 ```sh
 python lector.py examples/qr/coincide.pdf
