@@ -32,7 +32,8 @@ cuotas. Usa números JSON, no cadenas. tipo_iva y tipo_retencion son porcentajes
 (p. ej., 21). Solo rellena un tipo si se aplica explícitamente a la base completa.
 
 total_simple es true solo si el resumen permite comprobar total = base + IVA -
-retención, sin otros ajustes. En ese caso, si no aparece ninguna retención y se
+retención, sin otros ajustes. Marca true también cuando esa es la operación
+aplicable y el total impreso discrepa. Si no aparece ninguna retención y se
 ve que no se aplica, puede comprobarse el total tomando una retención de cero.
 Si hay una deducción ilegible o ambigua, devuelve false y explica la incidencia.
 En incidencias señala problemas de interpretación: identidades dudosas, moneda
@@ -55,6 +56,39 @@ solo si puedes leer entero su nombre legal y atribuirlo al proveedor. Si una
 parte del nombre admite varias lecturas, deja el emisor en null y márcalo
 como dudoso aunque el NIF sea nítido. No reconstruyas nombres por contexto.
 La legibilidad de un campo no se hereda del QR, de los totales ni de otro campo."""
+
+
+def _conflictos_de_importes(lectura):
+    """Indica qué campos intervienen en cada comprobación que falla."""
+    base, iva, retencion, total = [
+        Decimal(str(lectura[k])) if lectura[k] is not None else None
+        for k in ("base", "iva", "retencion", "importe_total")
+    ]
+    if retencion is not None and retencion < 0:
+        raise ValueError("La retención debe expresarse como magnitud positiva.")
+    if lectura["tipo_retencion"] not in (None, 0) and retencion is None:
+        yield ("retencion",), "Figura un tipo de retención sin cuota verificable."
+
+    if not lectura["total_simple"] or base is None:
+        return
+
+    legibilidad_retencion = lectura.get("confianza_por_campo", {}).get("retencion")
+    sin_retencion = lectura["tipo_retencion"] in (None, 0) and legibilidad_retencion in (None, "no_aplica")
+    if iva is not None and total is not None and (retencion is not None or sin_retencion):
+        calculado = base + iva - (retencion or Decimal(0))
+        if abs(calculado - total) > Decimal("0.01"):
+            campos = ("base", "iva") if retencion is None else ("base", "iva", "retencion")
+            yield campos, f"Total impreso {total} €, total calculado {calculado} €."
+
+    for campo, cuota, etiqueta in (("iva", iva, "IVA"), ("retencion", retencion, "Retención")):
+        tipo = lectura["tipo_" + campo]
+        if tipo is None or cuota is None:
+            continue
+        esperada = (base * Decimal(str(tipo)) / 100).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        if abs(esperada - cuota) > Decimal("0.01"):
+            yield ("base", campo), (
+                f"{etiqueta} de {cuota} € en la factura. El {tipo}% de {base} € serían {esperada} €."
+            )
 
 
 def revisar(lectura, qr=None, proveedores=None):
@@ -82,31 +116,17 @@ def revisar(lectura, qr=None, proveedores=None):
     resultado, revision, motivos_campos = evaluar_campos(lectura, proveedores)
     motivos.extend(motivos_campos)
 
-    base, iva, retencion, total = [
-        Decimal(str(lectura[k])) if lectura[k] is not None else None
-        for k in ("base", "iva", "retencion", "importe_total")
-    ]
-    if retencion is not None and retencion < 0:
-        raise ValueError("La retención debe expresarse como magnitud positiva.")
-    if lectura["tipo_retencion"] not in (None, 0) and retencion is None:
-        motivos.append("Figura un tipo de retención sin cuota verificable.")
-    if lectura["total_simple"] and base is not None and iva is not None:
-        if total is not None and (retencion is not None or lectura["tipo_retencion"] in (None, 0)):
-            calculado = base + iva - (retencion or Decimal(0))
-            if abs(calculado - total) > Decimal("0.01"):
-                motivos.append(f"Total impreso {total} €, total calculado {calculado} €.")
-        for campo, cuota in (("iva", iva), ("retencion", retencion)):
-            tipo = lectura["tipo_" + campo]
-            if tipo is not None and cuota is not None:
-                esperada = (base * Decimal(str(tipo)) / 100).quantize(
-                    Decimal("0.01"), rounding=ROUND_HALF_UP
-                )
-                if abs(esperada - cuota) > Decimal("0.01"):
-                    etiqueta = "IVA" if campo == "iva" else "Retención"
-                    motivos.append(
-                        f"{etiqueta} de {cuota} € en la factura. "
-                        f"El {tipo}% de {base} € serían {esperada} €."
-                    )
+    for campos, motivo in _conflictos_de_importes(lectura):
+        motivos.append(motivo)
+        for campo in campos:
+            detalle = revision[campo]
+            if detalle["decision"] == "no_aplica":
+                continue
+            detalle["decision"] = "revisar"
+            detalle.setdefault("motivos", []).append(motivo)
+            if lectura[campo] is not None:
+                detalle["candidato"] = lectura[campo]
+            resultado[campo] = None
 
     if qr is not None:
         cotejo, diferencias = contrastar(lectura, qr)

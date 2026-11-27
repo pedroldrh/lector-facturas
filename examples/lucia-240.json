@@ -1,0 +1,36 @@
+{
+  "emisor": "Lucía Martín",
+  "nif": "12345678Z",
+  "base": 240.0,
+  "iva": 50.4,
+  "retencion": 36.0,
+  "qr_fiscal": {
+    "estado": "sin_qr_fiscal"
+  },
+  "revision_campos": {
+    "emisor": {
+      "legibilidad": "claro",
+      "decision": "usar",
+      "contraste_directorio": "no_consultado"
+    },
+    "nif": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "base": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "iva": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "retencion": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    }
+  },
+  "total_impreso": 254.4,
+  "estado": "leido",
+  "motivos": []
+}
