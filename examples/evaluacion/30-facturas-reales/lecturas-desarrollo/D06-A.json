@@ -1,0 +1,77 @@
+{
+  "id": "D06",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:30.782972+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "750b6397dd73f5ddadd33acbefbc0e484e914a8915e9a7d5e2620fbc973c4675"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 20225,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 194,
+    "reasoning_output_tokens": 0
+  },
+  "modelo": {
+    "emisor": "Cunca Blanca s.l.",
+    "nif": "B96508692",
+    "base": 235.8,
+    "iva": 23.58,
+    "retencion": null,
+    "importe_total": 259.38,
+    "tipo_iva": 10,
+    "tipo_retencion": null,
+    "numero_factura": "021579",
+    "fecha_expedicion": "25-02-2025",
+    "total_fiscal_impreso": 259.38,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "claro",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": []
+  },
+  "lector": {
+    "emisor": "Cunca Blanca s.l.",
+    "nif": "B96508692",
+    "base": 235.8,
+    "iva": 23.58,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "base": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "iva": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 259.38,
+    "estado": "leido",
+    "motivos": []
+  }
+}

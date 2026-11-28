@@ -1,0 +1,82 @@
+{
+  "id": "D11",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:31.840467+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "254e6e9d0d8673f04d5b28a0d8be692a9a818894205d82b8ecca98754de7fa40"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 20225,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 229,
+    "reasoning_output_tokens": 0
+  },
+  "modelo": {
+    "emisor": "Endesa Energía XXI S.L.U.",
+    "nif": "B82846825",
+    "base": null,
+    "iva": 51.85,
+    "retencion": null,
+    "importe_total": 298.74,
+    "tipo_iva": 21,
+    "tipo_retencion": null,
+    "numero_factura": "S1M601N0091464",
+    "fecha_expedicion": "28-01-2016",
+    "total_fiscal_impreso": 298.74,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "claro",
+      "base": "no_consta",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": [
+      "La base imponible total no figura impresa. Los cuatro conceptos anteriores al IVA suman 246,89 €."
+    ]
+  },
+  "lector": {
+    "emisor": "Endesa Energía XXI S.L.U.",
+    "nif": "B82846825",
+    "base": null,
+    "iva": 51.85,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "base": {
+        "legibilidad": "no_consta",
+        "decision": "revisar"
+      },
+      "iva": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 298.74,
+    "estado": "revisar",
+    "motivos": [
+      "La base imponible total no figura impresa. Los cuatro conceptos anteriores al IVA suman 246,89 €.",
+      "Revisar el campo base. Legibilidad declarada: no_consta."
+    ]
+  }
+}

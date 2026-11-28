@@ -1,0 +1,77 @@
+{
+  "id": "D05",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:30.791863+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "04a1c32fab52bd3efee045e7a55b7de0e85e19937fc4552f565a850907c19dcf"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 20225,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 201,
+    "reasoning_output_tokens": 0
+  },
+  "modelo": {
+    "emisor": "CABLE AIREWORLD, S.A.U.",
+    "nif": "A03317344",
+    "base": 42.99,
+    "iva": 9.03,
+    "retencion": null,
+    "importe_total": 52.02,
+    "tipo_iva": 21,
+    "tipo_retencion": null,
+    "numero_factura": "0031800009129",
+    "fecha_expedicion": "02-03-2018",
+    "total_fiscal_impreso": 52.02,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "claro",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": []
+  },
+  "lector": {
+    "emisor": "CABLE AIREWORLD, S.A.U.",
+    "nif": "A03317344",
+    "base": 42.99,
+    "iva": 9.03,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "base": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "iva": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 52.02,
+    "estado": "leido",
+    "motivos": []
+  }
+}

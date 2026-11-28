@@ -1,0 +1,82 @@
+{
+  "id": "D08",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:48.258360+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "94f4cd7d03e0f3b9d2cb59f068374c19653803cf502124ebf30168bb6cc3c2de"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 60944,
+    "cached_input_tokens": 57088,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 385,
+    "reasoning_output_tokens": 79
+  },
+  "modelo": {
+    "emisor": "PROT ENERGIA COMERCIALIZACION, S.L.",
+    "nif": null,
+    "base": 257.92,
+    "iva": 54.16,
+    "retencion": null,
+    "importe_total": 312.08,
+    "tipo_iva": 21,
+    "tipo_retencion": null,
+    "numero_factura": "ENE 220009570",
+    "fecha_expedicion": "19-05-2022",
+    "total_fiscal_impreso": 312.08,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "ilegible",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": [
+      "La resolución del texto del margen impide transcribir con seguridad el NIF del emisor."
+    ]
+  },
+  "lector": {
+    "emisor": "PROT ENERGIA COMERCIALIZACION, S.L.",
+    "nif": null,
+    "base": 257.92,
+    "iva": 54.16,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "ilegible",
+        "decision": "revisar"
+      },
+      "base": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "iva": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 312.08,
+    "estado": "revisar",
+    "motivos": [
+      "La resolución del texto del margen impide transcribir con seguridad el NIF del emisor.",
+      "Revisar el campo nif. Legibilidad declarada: ilegible."
+    ]
+  }
+}

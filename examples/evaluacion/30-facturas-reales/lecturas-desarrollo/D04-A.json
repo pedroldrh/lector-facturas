@@ -1,0 +1,77 @@
+{
+  "id": "D04",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:30.434320+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "008677562107fc46f71d2dfc8293362ef79fcd9676c47dd0c569660d8400fda4"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 15489,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 200,
+    "reasoning_output_tokens": 0
+  },
+  "modelo": {
+    "emisor": "LA PECERA NOVELDA, S.L.U.",
+    "nif": "B42577155",
+    "base": 15.71,
+    "iva": 3.3,
+    "retencion": null,
+    "importe_total": 19.01,
+    "tipo_iva": 21,
+    "tipo_retencion": null,
+    "numero_factura": "A/8",
+    "fecha_expedicion": "03-07-2018",
+    "total_fiscal_impreso": 19.01,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "claro",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": []
+  },
+  "lector": {
+    "emisor": "LA PECERA NOVELDA, S.L.U.",
+    "nif": "B42577155",
+    "base": 15.71,
+    "iva": 3.3,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "base": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "iva": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 19.01,
+    "estado": "leido",
+    "motivos": []
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "id": "D10",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:41.250663+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "72864b43329f7cc9ebc458bcfa7d2fe7798c364112a134d5ea2c47f8db993c80"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 20222,
+    "cached_input_tokens": 16640,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 266,
+    "reasoning_output_tokens": 44
+  },
+  "modelo": {
+    "emisor": "HAPPY FLOWER GARDEN S.L.",
+    "nif": null,
+    "base": 54.017,
+    "iva": 11.343,
+    "retencion": null,
+    "importe_total": 65.36,
+    "tipo_iva": 21,
+    "tipo_retencion": null,
+    "numero_factura": null,
+    "fecha_expedicion": "31-03-2021",
+    "total_fiscal_impreso": 65.36,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "ilegible",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": [
+      "El NIF del emisor es ilegible.",
+      "Los últimos dígitos del número de factura requieren revisión."
+    ]
+  },
+  "lector": {
+    "emisor": "HAPPY FLOWER GARDEN S.L.",
+    "nif": null,
+    "base": 54.017,
+    "iva": 11.343,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "ilegible",
+        "decision": "revisar"
+      },
+      "base": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "iva": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 65.36,
+    "estado": "revisar",
+    "motivos": [
+      "El NIF del emisor es ilegible.",
+      "Los últimos dígitos del número de factura requieren revisión.",
+      "Revisar el campo nif. Legibilidad declarada: ilegible."
+    ]
+  }
+}

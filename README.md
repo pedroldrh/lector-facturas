@@ -20,7 +20,9 @@ Esta salida se obtuvo al ejecutar el lector actual con Astra sobre el tique. Hiz
 
 ## Qué cambió al probar el prompt en 30 facturas reales
 
-Probé el prompt básico con **12 facturas reales** y usé sus errores para ajustar las instrucciones. Después comparé ambas versiones con las mismas **18 facturas nuevas**. Cada versión recibía las mismas páginas en una sesión independiente de Astra, con los mismos controles de Python. [Comparación completa, respuestas y fuentes](examples/evaluacion/30-facturas-reales/README.md)
+Probé el prompt básico con **12 facturas reales** y usé sus errores para ajustar las instrucciones. [Abrir las 12 facturas y sus respuestas de Astra](examples/evaluacion/30-facturas-reales/README.md#las-12-facturas-del-prompt-básico)
+
+Después comparé ambas versiones con las mismas **18 facturas nuevas**. Cada versión recibía las mismas páginas en una sesión independiente de Astra, con los mismos controles de Python. [Comparación completa, respuestas y fuentes](examples/evaluacion/30-facturas-reales/README.md)
 
 | Resultado en las 18 facturas | Básico | Nuevo |
 | --- | ---: | ---: |

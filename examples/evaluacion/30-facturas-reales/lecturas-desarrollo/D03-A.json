@@ -1,0 +1,77 @@
+{
+  "id": "D03",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:40.923980+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "6a1321d1d74a1d96ef2795bef3efaa994ecd9aaf56030120d725baaaa4dcd5c1"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 20225,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 205,
+    "reasoning_output_tokens": 0
+  },
+  "modelo": {
+    "emisor": "PAPELERIA DE LA OFICINA, S. L.",
+    "nif": "B47325469",
+    "base": 83.81,
+    "iva": 17.6,
+    "retencion": null,
+    "importe_total": 101.41,
+    "tipo_iva": 21.0,
+    "tipo_retencion": null,
+    "numero_factura": "2053",
+    "fecha_expedicion": "05-05-2022",
+    "total_fiscal_impreso": 101.41,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "claro",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": []
+  },
+  "lector": {
+    "emisor": "PAPELERIA DE LA OFICINA, S. L.",
+    "nif": "B47325469",
+    "base": 83.81,
+    "iva": 17.6,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "base": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "iva": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 101.41,
+    "estado": "leido",
+    "motivos": []
+  }
+}

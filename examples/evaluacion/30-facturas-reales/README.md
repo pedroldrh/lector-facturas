@@ -8,6 +8,27 @@ En 18 facturas reales reservadas para la prueba, el prompt básico dio por utili
 
 **Viajes El Corte Inglés.** También había dos tipos de IVA, pero aquí sí figuraban los totales de la base y del IVA, 66,46 € y 5,74 €. Las dos versiones leyeron bien los cinco campos. El prompt básico pidió revisión solo porque había dos tipos. El nuevo aceptó la factura. Esta fue la única revisión que se ahorró. [Factura H13, pág. 5](https://www.uv.es/opex/OPEX/VLC_Campus_inclusivo/facturas%20escaneadas1.pdf#page=5)
 
+## Las 12 facturas del prompt básico
+
+Cada fila corresponde a una factura que Astra leyó con el prompt básico. Las 12 proceden de ocho documentos públicos. Algunos reúnen varias facturas. El primer enlace abre el documento original en la página de la factura. El segundo abre la respuesta de aquella ejecución, con el modelo utilizado, su lectura de los cinco campos y la decisión del lector. El [prompt básico](prompt-basico.txt) fue el mismo en las doce.
+
+| Factura | Proveedor o establecimiento | Fuente original | Respuesta guardada |
+| --- | --- | --- | --- |
+| D01 | Arsys | [PDF, pág. 4](https://www.valladolid.es/es/temas/hacemos/cuentas-grupos-politicos/justificacion-grupos-politicos-informe-intervencion-2022.ficheros/843768-CUENTAS%20MUNICIPAL%20VTLP%202022.pdf#page=4) | [Lectura de Astra](lecturas-desarrollo/D01-A.json) |
+| D02 | Servicios de Prensa Comunicaplus | [PDF, pág. 5](https://www.valladolid.es/es/temas/hacemos/cuentas-grupos-politicos/justificacion-grupos-politicos-informe-intervencion-2022.ficheros/843768-CUENTAS%20MUNICIPAL%20VTLP%202022.pdf#page=5) | [Lectura de Astra](lecturas-desarrollo/D02-A.json) |
+| D03 | Papelería de la Oficina | [PDF, pág. 21](https://www.valladolid.es/es/temas/hacemos/cuentas-grupos-politicos/justificacion-grupos-politicos-informe-intervencion-2022.ficheros/843768-CUENTAS%20MUNICIPAL%20VTLP%202022.pdf#page=21) | [Lectura de Astra](lecturas-desarrollo/D03-A.json) |
+| D04 | La Pecera Novelda | [PDF, pág. 4](https://novelda.es/wp-content/uploads/2019/10/PUNTO-3.pdf#page=4) | [Lectura de Astra](lecturas-desarrollo/D04-A.json) |
+| D05 | Cable Aireworld | [PDF, pág. 25](https://novelda.es/wp-content/uploads/2019/10/PUNTO-3.pdf#page=25) | [Lectura de Astra](lecturas-desarrollo/D05-A.json) |
+| D06 | Restaurante Os Galegos (Cunca Blanca) | [PDF, pág. 1](https://roviraleaks.compromis.net/invoices/25-02-25-FACTURA-OsGalegos.pdf#page=1) | [Lectura de Astra](lecturas-desarrollo/D06-A.json) |
+| D07 | Bar Kramer | [PDF, pág. 1](https://roviraleaks.compromis.net/invoices/24-03-25-FACTURA-Kramer.pdf#page=1) | [Lectura de Astra](lecturas-desarrollo/D07-A.json) |
+| D08 | Prot Energía | [PDF, pág. 113](https://upcommons.upc.edu/server/api/core/bitstreams/fa158ab5-cc2b-4055-bf3d-b6cae005082b/content#page=113) | [Lectura de Astra](lecturas-desarrollo/D08-A.json) |
+| D09 | Reprografía B.V. | [PDF, pág. 48](https://valenciasaludable2030.es/wp-content/uploads/2023/02/2020.2021-MEMORIA-ACTIVIDADES.pdf#page=48) | [Lectura de Astra](lecturas-desarrollo/D09-A.json) |
+| D10 | Happy Flower Garden | [PDF, pág. 148](https://valenciasaludable2030.es/wp-content/uploads/2023/02/2020.2021-MEMORIA-ACTIVIDADES.pdf#page=148) | [Lectura de Astra](lecturas-desarrollo/D10-A.json) |
+| D11 | Endesa · Llubí | [PDF, pág. 71](https://llubi.cat/sites/cilma_llubi/files/2023-02/PROY%20COMPLETO%20MARGET%2BCEMENTIRI%20-%20FIRMADO.pdf?download=1#page=71) | [Lectura de Astra](lecturas-desarrollo/D11-A.json) |
+| D12 | Endesa · Las Palmas de Gran Canaria | [PDF, pág. 5](https://www.laspalmasgc.es/export/sites/laspalmasgc/.galleries/documentos-ayto-presupuestos/P2021_08.pdf#page=5) | [Lectura de Astra](lecturas-desarrollo/D12-A.json) |
+
+En el Bar Kramer (D07), el modelo solo vio el tique de la página 1. El [justificante de la página 3](https://roviraleaks.compromis.net/invoices/24-03-25-FACTURA-Kramer.pdf#page=3) sirvió para comprobar el error después. [Copia del tique en el repositorio](../../bar-kramer/tique.pdf)
+
 ## Las 18 facturas reservadas
 
 | Medida | Prompt básico | Prompt nuevo |

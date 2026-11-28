@@ -1,0 +1,82 @@
+{
+  "id": "D12",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:31.824213+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "6ede66483f5a8063c827dd92b1e0adf910e7c039ebe428f12a0e85d184d727d7"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 20228,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 271,
+    "reasoning_output_tokens": 0
+  },
+  "modelo": {
+    "emisor": "Endesa Energía, S.A.U.",
+    "nif": "A81948077",
+    "base": 6769.67,
+    "iva": null,
+    "retencion": null,
+    "importe_total": 6979.15,
+    "tipo_iva": null,
+    "tipo_retencion": null,
+    "numero_factura": "C00Z1060000236",
+    "fecha_expedicion": "11-01-2021",
+    "total_fiscal_impreso": 6979.15,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "claro",
+      "base": "claro",
+      "iva": "no_consta",
+      "retencion": "no_aplica"
+    },
+    "total_simple": false,
+    "incidencias": [
+      "La base total se obtiene sumando las dos bases de IGIC impresas. Se aplican el 3 % sobre 6.609,91 € y el 7 % sobre 159,76 €, con cuotas de 198,30 € y 11,18 €, respectivamente. La factura no repercute IVA."
+    ]
+  },
+  "lector": {
+    "emisor": "Endesa Energía, S.A.U.",
+    "nif": "A81948077",
+    "base": 6769.67,
+    "iva": null,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "base": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "iva": {
+        "legibilidad": "no_consta",
+        "decision": "revisar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 6979.15,
+    "estado": "revisar",
+    "motivos": [
+      "La base total se obtiene sumando las dos bases de IGIC impresas. Se aplican el 3 % sobre 6.609,91 € y el 7 % sobre 159,76 €, con cuotas de 198,30 € y 11,18 €, respectivamente. La factura no repercute IVA.",
+      "Revisar el campo iva. Legibilidad declarada: no_consta."
+    ]
+  }
+}

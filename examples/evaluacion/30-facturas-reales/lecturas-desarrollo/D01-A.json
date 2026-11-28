@@ -1,0 +1,77 @@
+{
+  "id": "D01",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:40.226287+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "4a7cca17510702314bc8938317e35fe8eb011cb907d332681b31bab6be244bdc"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 20222,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 200,
+    "reasoning_output_tokens": 0
+  },
+  "modelo": {
+    "emisor": "Arsys Internet S.L.U.",
+    "nif": "B-85294916",
+    "base": 82.8,
+    "iva": 17.39,
+    "retencion": null,
+    "importe_total": 100.19,
+    "tipo_iva": 21,
+    "tipo_retencion": null,
+    "numero_factura": "ES2022A016213",
+    "fecha_expedicion": "12-01-2022",
+    "total_fiscal_impreso": 100.19,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "claro",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": []
+  },
+  "lector": {
+    "emisor": "Arsys Internet S.L.U.",
+    "nif": "B-85294916",
+    "base": 82.8,
+    "iva": 17.39,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "base": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "iva": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 100.19,
+    "estado": "leido",
+    "motivos": []
+  }
+}

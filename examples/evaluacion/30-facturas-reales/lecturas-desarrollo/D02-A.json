@@ -1,0 +1,77 @@
+{
+  "id": "D02",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:39.346169+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "f6ebec4ca3ad72cad7e7eba7c6c3a2796fd7bade82f94cbbe11c8220517dabe5"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 20222,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 208,
+    "reasoning_output_tokens": 0
+  },
+  "modelo": {
+    "emisor": "SERVICIOS DE PRENSA COMUNICAPLUS, S.A.",
+    "nif": "A47454038",
+    "base": 95.19,
+    "iva": 3.81,
+    "retencion": null,
+    "importe_total": 99.0,
+    "tipo_iva": 4.0,
+    "tipo_retencion": null,
+    "numero_factura": "SUS01 220005",
+    "fecha_expedicion": "31-01-2022",
+    "total_fiscal_impreso": 99.0,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "claro",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": []
+  },
+  "lector": {
+    "emisor": "SERVICIOS DE PRENSA COMUNICAPLUS, S.A.",
+    "nif": "A47454038",
+    "base": 95.19,
+    "iva": 3.81,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "base": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "iva": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 99.0,
+    "estado": "leido",
+    "motivos": []
+  }
+}

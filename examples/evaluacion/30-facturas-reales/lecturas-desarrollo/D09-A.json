@@ -1,0 +1,81 @@
+{
+  "id": "D09",
+  "brazo": "A",
+  "fecha_utc": "2026-11-27T21:35:31.851253+00:00",
+  "referencia_modelo": "gpt-6.2-astra",
+  "esfuerzo": "low",
+  "prompt_sha256": "b0c88c5014cbc9bccc374be1ce79eb1b8befa17abd70d7a69cf4e5883ef1be24",
+  "paginas_sha256": [
+    "84ec2e19e804587fa4378e1b04e554f415962216a8321a6691dbde0a1a779797"
+  ],
+  "intentos_tecnicos_fallidos": [],
+  "uso": {
+    "input_tokens": 20228,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 233,
+    "reasoning_output_tokens": 0
+  },
+  "modelo": {
+    "emisor": "REPROGRAFIA B.V. SL",
+    "nif": "B46552097",
+    "base": 36.85,
+    "iva": 7.74,
+    "retencion": null,
+    "importe_total": 44.59,
+    "tipo_iva": 21,
+    "tipo_retencion": null,
+    "numero_factura": "A/107287",
+    "fecha_expedicion": "05-11-2020",
+    "total_fiscal_impreso": 44.59,
+    "confianza_por_campo": {
+      "emisor": "claro",
+      "nif": "claro",
+      "base": "claro",
+      "iva": "claro",
+      "retencion": "no_aplica"
+    },
+    "total_simple": true,
+    "incidencias": [
+      "La línea «Total IRPF -19%» figura sin importe. El total a pagar coincide con la suma de la base y el IVA."
+    ]
+  },
+  "lector": {
+    "emisor": "REPROGRAFIA B.V. SL",
+    "nif": "B46552097",
+    "base": 36.85,
+    "iva": 7.74,
+    "retencion": null,
+    "qr_fiscal": {
+      "estado": "sin_qr_fiscal"
+    },
+    "revision_campos": {
+      "emisor": {
+        "legibilidad": "claro",
+        "decision": "usar",
+        "contraste_directorio": "no_consultado"
+      },
+      "nif": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "base": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "iva": {
+        "legibilidad": "claro",
+        "decision": "usar"
+      },
+      "retencion": {
+        "legibilidad": "no_aplica",
+        "decision": "no_aplica"
+      }
+    },
+    "total_impreso": 44.59,
+    "estado": "revisar",
+    "motivos": [
+      "La línea «Total IRPF -19%» figura sin importe. El total a pagar coincide con la suma de la base y el IVA."
+    ]
+  }
+}
