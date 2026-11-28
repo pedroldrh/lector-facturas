@@ -1,28 +1,38 @@
 # Lector de facturas
 
-Un agente pequeño que lee una factura en PDF y devuelve cinco campos en JSON. El modelo lee las páginas y Python decide qué valores se pueden usar y cuáles necesitan revisión.
+Un agente pequeño lee una factura en PDF una sola vez. Devuelve el nombre del emisor, su NIF, la base, el IVA y la retención. Si la IA duda de un dato, Python lo deja pendiente para el gestor y conserva los demás campos que pasan las comprobaciones. La salida JSON indica al gestor el campo y el motivo de la revisión.
 
 ## El Bar Kramer y el nombre equivocado
 
-En un tique real de **79,75 €**, la IA propuso **Rooms and Host Services SL** como emisor. Había leído bien el nombre. El error fue atribuir la venta a la empresa que figuraba en el aviso de protección de datos. Estos son los cinco campos de esa ejecución, guardada antes del cambio de prompt.
+**El fallo.** En un tique de 79,75 €, Astra leyó **ROOMS AND HOST SERVICES SL** y dio ese nombre por bueno con el prompt básico. Esa sociedad aparecía en el aviso de privacidad. Arriba del tique solo figuraban la marca *Bar Kramer* y el NIF. [Tique que vio el agente](examples/bar-kramer/tique.pdf) · [Salida real del prompt básico en la prueba de desarrollo](examples/bar-kramer/prompt-basico.json)
+
+**Cómo comprobé quién había vendido la comida.** En la página 3 del expediente público, un justificante identifica a **Emprendimientos Hosteleros Valencia** como proveedor. Coinciden el número de factura, el NIF y los 79,75 €. El agente solo recibió la página 1. Usamos la página 3 después para comprobar la respuesta. [Justificante, página 3](https://roviraleaks.compromis.net/invoices/24-03-25-FACTURA-Kramer.pdf#page=3)
+
+**Cómo se detecta la duda con el tique solo.** El prompt pide comprobar qué texto relaciona el nombre de la empresa con la venta. Una mención en el aviso de privacidad solo acredita quién trata los datos. Si el agente duda del emisor, el programa deja el nombre pendiente para el gestor en esa misma lectura. El gestor puede usar los otros datos y sabe qué falta por confirmar. [Instrucciones del lector](prompts/factura.txt)
 
 | Emisor | NIF del emisor | Base imponible | IVA | Retención |
-| --- | --- | ---: | ---: | ---: |
-| Pendiente de revisión | B98331887 | 72,50 € | 7,25 € | No aplica |
+| --- | --- | ---: | ---: | --- |
+| Pendiente de revisión | B-98331887 | 72,50 € | 7,25 € | No aplica |
 
-**Qué hizo saltar la revisión.** La cabecera mostraba la marca *Bar Kramer* y el NIF. En el pie, la otra sociedad figuraba como **responsable del tratamiento de datos**. La primera lectura propuso esa sociedad, explicó la duda y marcó el emisor como `dudoso`. Con esa señal, Python dejó el campo en `null` y pidió una segunda lectura independiente del nombre. La segunda repitió la misma sociedad y la calificó como `claro`. El programa conservó el nombre como candidato para revisión porque la primera lectura había sido dudosa. [Tique](examples/bar-kramer/tique.pdf) · [Las dos lecturas de la IA](examples/bar-kramer/lecturas.json) · [Salida completa](examples/bar-kramer/salida.json)
+Esta salida se obtuvo al ejecutar el lector actual con Astra sobre el tique. Hizo una llamada. [Ver el resultado y el motivo de la duda](examples/bar-kramer/una-lectura.json)
 
-**Cómo comprobamos el error.** El modelo solo recibió la primera página y trabajó sin directorio de proveedores. En la página 3 del expediente, la Administración identifica a **Emprendimientos Hosteleros Valencia** como proveedor de la factura 012526, con el mismo NIF e importe. Esa página fue la referencia para evaluar la prueba. La copia del tique incluida aquí conserva los píxeles de la página 1 tal como los recibió el modelo. [Expediente publicado por Compromís, pág. 1](https://roviraleaks.compromis.net/invoices/24-03-25-FACTURA-Kramer.pdf#page=1) · [Conformidad administrativa, pág. 3](https://roviraleaks.compromis.net/invoices/24-03-25-FACTURA-Kramer.pdf#page=3)
-
-**Qué pasaría con una factura nueva.** Hicimos una prueba adicional: simulamos que la primera lectura marcaba ese mismo nombre como claro y no advertía de ninguna incidencia. Sin ficha de proveedor, el lector aceptó el nombre erróneo. Al facilitarle una ficha verificada para ese NIF con `--proveedores`, detectó la discrepancia y dejó el nombre pendiente. Si la gestoría aún no conoce al proveedor, el gestor puede pedir una factura completa que acredite la razón social. [Prueba con y sin ficha](test_relectura.py) · [Correspondencia entre NIF y razón social en el BOE](https://www.boe.es/buscar/doc.php?id=BOE-A-2015-4644)
-
-**Al repetir el tique con el prompt nuevo**, la primera lectura ya dejó el nombre vacío y explicó que la sociedad del pie solo figuraba como responsable de los datos. La segunda volvió a proponer esa sociedad. El lector mantuvo el nombre pendiente y conservó el NIF, la base y el IVA. El tique de Kramer formaba parte de las 12 facturas de desarrollo. [Salida con el prompt actual](examples/bar-kramer/con-prompt-nuevo.json)
+En una versión anterior probamos a pedir una segunda opinión. La primera lectura propuso la sociedad del aviso con dudas. La segunda repitió el mismo error con seguridad. En el lector actual la primera duda basta para que el gestor revise ese campo. [Respuestas históricas](examples/bar-kramer/lecturas.json) · [Salida de aquella versión](examples/bar-kramer/salida.json) · [Prueba anterior del prompt nuevo con relectura](examples/bar-kramer/con-prompt-nuevo.json)
 
 ## Qué cambió al probar el prompt en 30 facturas reales
 
-Usamos 12 facturas para escribir las instrucciones que utiliza hoy el lector. Después comparamos el prompt básico y el nuevo con las mismas 18 facturas reservadas, en sesiones separadas de Astra. [Prompt actual](prompts/factura.txt) · [Resultados de las 30 facturas](examples/evaluacion/30-facturas-reales/README.md)
+Los dos prompts pedían señalar las dudas por campo. Con las primeras **12 facturas** identificamos errores del prompt básico, incluido el Bar Kramer. Añadimos instrucciones concretas sobre cómo identificar al emisor, cuándo aceptar un total impreso y cuándo hace falta revisar la factura. Después, cada versión leyó las mismas **18 facturas nuevas**, en sesiones independientes de Astra. Hubo una sola lectura por factura y versión, con los mismos controles de Python. [Comparación completa, respuestas y fuentes](examples/evaluacion/30-facturas-reales/README.md)
 
-En una factura de viajes, el básico marcó como utilizables dos sumas correctas que no figuraban impresas como totales. El nuevo dejó esos dos campos pendientes. En otra factura los totales sí aparecían y el nuevo evitó una revisión. En conjunto, los campos aceptados que debían revisarse bajaron de **2 a 0**, y las revisiones innecesarias de facturas bajaron de **4 a 3**. Ninguna de las 30 tenía una retención aplicada.
+| Resultado en las 18 facturas | Básico | Nuevo |
+| --- | ---: | ---: |
+| Campos que se dieron por buenos y debían revisarse | 2 | 0 |
+| Facturas enviadas a revisión sin necesidad | 4 | 3 |
+| Facturas que necesitaban revisión y fueron marcadas | 2 de 2 | 2 de 2 |
+
+Los dos campos eran la base y el IVA de una misma factura. El prompt básico sumó bien las filas, pero presentó las sumas como totales leídos. La revisión que se ahorró correspondía a otra factura cuyos totales sí estaban impresos. En estas 18 facturas ambos prompts acertaron por igual en identificar al proveedor. Ninguna de las 30 llevaba una retención aplicada.
+
+## Cómo lo probaría en Melso
+
+Empezaría por facturas que un gestor ya haya revisado, tanto las que corrigió como las que estaban bien. Usaría una parte para entender por qué se equivoca el agente y ajustar las instrucciones. Reservaría el resto para comparar ambas versiones y contar dos cosas: cuántos errores se cuelan y cuántas facturas correctas llegan al gestor sin necesidad. Esa prueba permitiría decidir si conviene adoptar el cambio con facturas propias de Melso.
 
 ## Probar con un PDF
 
@@ -30,10 +40,10 @@ En una factura de viajes, el básico marcó como utilizables dos sumas correctas
 python lector.py examples/bar-kramer/tique.pdf
 ```
 
-Puedes sustituir la ruta por la de tu factura en euros. Cada ejecución hace una lectura nueva y puede responder de otra manera. Esta prueba reproduce la decisión de Python con las dos respuestas guardadas:
+Puedes sustituir la ruta por la de tu factura en euros. Cada ejecución hace una lectura nueva y puede responder de otra manera. Para reproducir la decisión con la primera lectura dudosa guardada y comprobar que solo se llama al modelo una vez:
 
 ```sh
-python -m unittest test_relectura.RelecturaSelectiva.test_tique_del_bar_kramer
+python -m unittest test_revision_directa.RevisionDirecta.test_tique_del_bar_kramer
 ```
 
 **Instalación.** Se ha probado con Python 3.12, Poppler (`pdftoppm`) y Codex CLI con la sesión iniciada. El lector envía al modelo las imágenes de las páginas. En macOS puedes instalar Poppler con `brew install poppler`. En Debian y Ubuntu, el paquete es `poppler-utils`. [Instalación de Codex CLI](https://developers.openai.com/codex/cli/)
@@ -48,7 +58,7 @@ python -m pip install -r requirements.txt
 
 ## Cómo interpretar el resultado
 
-La retención se expresa en euros como importe positivo que se descuenta del pago. Si un campo es dudoso, queda en `null`. Si los importes de una factura simple contradicen el total o un porcentaje impreso por más de un céntimo, los campos implicados quedan pendientes de revisión. Los valores leídos se conservan como `candidato` en `revision_campos` y `motivos` explica la discrepancia. Un conflicto entre cifras permite seguir usando un nombre y un NIF legibles y sin incidencias.
+La retención se expresa en euros como importe positivo que se descuenta del pago. Si un campo es dudoso, queda en `null`. Si los importes de una factura simple contradicen el total o un porcentaje impreso por más de un céntimo, los campos implicados quedan pendientes de revisión. Los valores leídos que requieren revisión se conservan como `candidato` en `revision_campos` y `motivos` explica la discrepancia. Un conflicto entre cifras permite seguir usando un nombre y un NIF legibles y sin incidencias. Un modelo puede dar por bueno un nombre equivocado. Si ya se dispone de una ficha de proveedor verificada, el lector puede contrastarla con el NIF. [Prueba con y sin ficha](test_revision_directa.py)
 
 ## Cómo se usó la IA
 

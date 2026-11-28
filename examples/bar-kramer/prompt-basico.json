@@ -1,0 +1,36 @@
+{
+  "emisor": "ROOMS AND HOST SERVICES SL",
+  "nif": "B-98331887",
+  "base": 72.5,
+  "iva": 7.25,
+  "retencion": null,
+  "qr_fiscal": {
+    "estado": "sin_qr_fiscal"
+  },
+  "revision_campos": {
+    "emisor": {
+      "legibilidad": "claro",
+      "decision": "usar",
+      "contraste_directorio": "no_consultado"
+    },
+    "nif": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "base": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "iva": {
+      "legibilidad": "claro",
+      "decision": "usar"
+    },
+    "retencion": {
+      "legibilidad": "no_aplica",
+      "decision": "no_aplica"
+    }
+  },
+  "total_impreso": 79.75,
+  "estado": "leido",
+  "motivos": []
+}

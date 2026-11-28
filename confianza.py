@@ -74,7 +74,7 @@ def evaluar_campos(lectura, proveedores=None):
         if aprobados["emisor"] is not None:
             revision["emisor"]["candidato"] = aprobados["emisor"]
         aprobados["emisor"] = None
-        motivos = ["Lectura anterior sin evaluación por campo. Releer el nombre del emisor."]
+        motivos = ["Lectura anterior sin evaluación por campo. El gestor debe revisar el nombre del emisor."]
         for campo in ("emisor", "nif", "base", "iva"):
             if lectura[campo] is None:
                 motivos.append(f"No se ha podido verificar el campo {campo}.")

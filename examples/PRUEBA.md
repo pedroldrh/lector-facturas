@@ -15,23 +15,23 @@ Se redujo la factura de Nuria de 720 a 110 píxeles de ancho y se volvió a ampl
 
 La única alerta del modelo en aquella lectura se refería al NIF ilegible. Los importes cuadraban hasta el céntimo. El error en el nombre se comprobó al cotejar «María» con «Nuria» en el original nítido. En una factura nueva, un NIF ilegible basta para pedir revisión y solicitar una copia más clara antes de asociar el gasto a un proveedor. Pedro planteó otra pregunta: ¿qué pasaría si se pudiera leer el NIF y solo fallara el nombre? [Prueba con NIF legible y revisión por campo](identidad/README.md)
 
-## Relectura selectiva
+## ¿Ayudaba pedir a la IA una segunda opinión?
 
-La primera lectura extrae los cinco campos. El programa vuelve a consultar las mismas páginas si el nombre o el NIF quedan sin identificar con claridad, si el NIF contradice el QR fiscal o si el nombre discrepa de la ficha verificada para ese NIF. Una diferencia de importes por sí sola se resuelve con los controles aritméticos. La primera aparición de un proveedor con ambos datos legibles puede requerir un alta en el directorio, algo que una segunda lectura del nombre no resolvería.
+La [versión anterior](https://github.com/pedroldrh/lector-facturas/tree/a5b7ffbf0ac7a4ee7f9906260820e4f5aa7e806e) volvía a leer el nombre cuando encontraba dudas sobre la identidad. La segunda consulta recibía la imagen en una sesión nueva. Estos fueron los resultados de esas ejecuciones con GPT-6.2 Astra.
 
-La segunda consulta recibe las imágenes y una pregunta sobre el nombre, sin ver la respuesta anterior. Ante dos nombres distintos, el campo `emisor` queda en `null`. Las transcripciones se pueden consultar en `relectura_emisor.lecturas`. Si las dos primeras lecturas solo difieren en un acento agudo, el lector hace un último intento para distinguir una variante de escritura de un cambio de nombre. Incluso si dos respuestas de tres coinciden, la discrepancia queda pendiente. Si falta un nombre o alguna lectura lo considera dudoso, también se pide revisión. Si la relectura falla, se conserva el resto de la primera lectura. Dos lecturas iguales nunca levantan un bloqueo anterior.
-
-Se ejecutó el lector con GPT-6.2 Astra una vez por PDF y se comparó con el original nítido después. Las relecturas de la tabla las decidió el programa.
-
-| PDF | Llamadas | Nombres devueltos | Resultado |
+| PDF | Llamadas | Nombres devueltos | Resultado histórico |
 | --- | ---: | --- | --- |
 | [Original nítido](nuria-original.pdf) | 1 | Nuria Beltrán Llopis | Cinco campos utilizables. |
-| [Página borrosa](nuria-110px.pdf) | 2 | Nuria Beltrán Llopis en ambas | El NIF ilegible motivó la relectura y sigue pendiente. Los importes coincidieron con el original. |
+| [Página borrosa](nuria-110px.pdf) | 2 | Nuria Beltrán Llopis en ambas | El NIF siguió pendiente. Los importes coincidieron con el original. |
 | [Solo el nombre borroso](identidad/nombre-borroso.pdf) | 2 | Ninguna lectura pudo confirmar el nombre | Nombre pendiente. NIF y tres importes utilizables. |
 
-En una comprobación aparte, se pasaron por la regla las tres respuestas guardadas del experimento anterior. «Nuria» y «Núria» dieron lugar a la tercera lectura. Al aparecer «María», el lector dejó el nombre pendiente con el estado `distintos` y conservó los tres importes. [Resultados de las ejecuciones nuevas, respuestas históricas y reproducción](identidad/relectura-selectiva.json)
+En otra prueba, se reprodujeron las tres respuestas guardadas del experimento exploratorio. «Nuria» y «Núria» dieron lugar a la tercera lectura. Al aparecer «María», la versión anterior dejó el nombre pendiente y conservó los tres importes. [Resultados históricos y respuestas de la IA](identidad/relectura-selectiva.json)
 
-Se puede repetir la prueba desde el repositorio con `python lector.py examples/nuria-110px.pdf --model gpt-6.2-astra`. La regla se basa en señales de identidad. En concreto, las versiones de la serie de desenfoque se ampliaron de nuevo al mismo tamaño final. Contar los píxeles del archivo habría dado el mismo resultado para imágenes con distintos niveles de detalle.
+El lector actual hace una sola lectura y marca el campo dudoso para el gestor. Puedes probarlo con la misma factura desde la raíz del repositorio.
+
+```sh
+python lector.py examples/nuria-110px.pdf --model gpt-6.2-astra
+```
 
 ## Instrucción de la prueba exploratoria
 

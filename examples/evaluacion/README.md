@@ -1,6 +1,6 @@
 # ¿Cuándo merece la pena una segunda lectura?
 
-Se compararon tres formas de revisar las mismas 24 facturas sintéticas en euros. La primera lectura de cada PDF fue idéntica para las tres. Se contó cuántas veces el sistema aceptaba una factura que necesitaba revisión y cuántas veces le pedía a un gestor que revisara una factura correcta.
+Este experimento histórico comparó tres formas de revisar las mismas 24 facturas sintéticas en euros. La primera lectura de cada PDF fue idéntica para las tres. Se contó cuántas veces el sistema aceptaba una factura que necesitaba revisión y cuántas veces le pedía a un gestor que revisara una factura correcta.
 
 | Método | Casos que requerían revisión detectados | Facturas correctas enviadas a revisión | Coste estimado del modelo por factura |
 | --- | ---: | ---: | ---: |
@@ -9,6 +9,8 @@ Se compararon tres formas de revisar las mismas 24 facturas sintéticas en euros
 | Dos especialistas y revisión final en todos los casos | 9 de 9 | 0 | 0,448 USD |
 
 La diferencia fue un abono de dos páginas con dos tipos de IVA. El lector acertó los importes, pero señaló los dos tipos como incidencia. La revisión selectiva reconoció que ambos cuadraban. Evitar esa intervención humana costó unos 3,23 USD adicionales en el conjunto de 24 facturas. El coste estimado recoge los tokens de entrada, de caché y de salida observados. El tiempo del gestor se mide aparte. [Resultados y consumo por factura](resultados.csv)
+
+El lector actual hace una sola consulta a la IA y marca los datos dudosos para el gestor. Los resultados con 30 facturas reales están en la [comparación de los dos prompts](30-facturas-reales/README.md).
 
 ## ¿Y si basta con cambiar la instrucción?
 
